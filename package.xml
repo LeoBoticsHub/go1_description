@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
     <name>go1_description</name>
     <version>0.0.0</version>
     <description>The go1_description package</description>
 
-    <maintainer email="laikago@unitree.cc">unitree</maintainer>
-    <license>TODO</license>
+    <maintainer email="federico.rollo@leonardo.com">Federico Rollo</maintainer>
+    <license>BSD</license>
+    
+    <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
+    <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
 
-    <buildtool_depend>catkin</buildtool_depend>
-    <depend>roscpp</depend>
-    <depend>std_msgs</depend>
+    <depend>sensors_description</depend>
+
+    <export>                               
+        <build_type condition="$ROS_VERSION == 1">catkin</build_type>
+        <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type> 
+    </export> 
 </package>
