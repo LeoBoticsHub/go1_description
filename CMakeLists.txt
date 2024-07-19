@@ -4,8 +4,6 @@ project(go1_description)
 find_package(catkin QUIET)
 find_package(ament_cmake QUIET)
 
-find_package(sensors_description REQUIRED)
-
 if(${catkin_FOUND})
 
     catkin_package()
