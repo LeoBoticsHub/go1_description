@@ -32,21 +32,44 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
   <!-- ros_control plugin -->
+  <!-- <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/go1_gazebo</robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo> -->
+  <!-- <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+        <parameters>"file://$(find go1_description)/config/ros_control/ros_control.yaml</parameters>
+      </plugin>
+    </gazebo> -->
   <gazebo>
-    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/go1_gazebo</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>/home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/config/ros_control/ros_control.yaml</parameters>
     </plugin>
   </gazebo>
   <!-- Show the trajectory of trunk center. -->
+  <!-- <gazebo>
+        <plugin name="3dplot" filename="libLinkPlot3DPlugin.so">
+            <frequency>10</frequency>
+            <plot>
+                <link>base</link>
+                <pose>0 0 0 0 0 0</pose>
+                <material>Gazebo/Yellow</material>
+            </plot>
+        </plugin>
+    </gazebo> -->
   <gazebo>
-    <plugin filename="libLinkPlot3DPlugin.so" name="3dplot">
-      <frequency>10</frequency>
-      <plot>
-        <link>base</link>
-        <pose>0 0 0 0 0 0</pose>
-        <material>Gazebo/Yellow</material>
-      </plot>
+    <plugin filename="libgazebo_ros_p3d.so" name="p3d_base_controller">
+      <ros>
+        <argument>odom:=odom/ground_truth</argument>
+      </ros>
+      <body_name>base</body_name>
+      <frame_name>world</frame_name>
+      <update_rate>10.0</update_rate>
+      <xyz_offset>0 0 0</xyz_offset>
+      <rpy_offset>0 0 0</rpy_offset>
+      <gaussian_noise>0.01</gaussian_noise>
     </plugin>
   </gazebo>
   <!-- Show the trajectory of foot. You can add another trajectory about another foot. -->
@@ -60,29 +83,50 @@
             </plot>
         </plugin>
     </gazebo> -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_force.so" name="gazebo_ros_force">
-      <bodyName>trunk</bodyName>
-      <topicName>/apply_force/trunk</topicName>
-    </plugin>
-  </gazebo>
+  <!-- <gazebo>
+        <plugin filename="libgazebo_ros_force.so" name="gazebo_ros_force">
+            <bodyName>trunk</bodyName>
+            <topicName>/apply_force/trunk</topicName>
+        </plugin>
+    </gazebo> -->
+  <!-- <gazebo reference="imu_link">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>1000</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>trunk_imu</topicName>
+                <bodyName>imu_link</bodyName>
+                <updateRateHZ>1000.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo> -->
   <gazebo reference="imu_link">
-    <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
+    <sensor name="imu_controller" type="imu">
       <always_on>true</always_on>
-      <update_rate>1000</update_rate>
-      <visualize>true</visualize>
-      <topic>__default_topic__</topic>
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>trunk_imu</topicName>
-        <bodyName>imu_link</bodyName>
-        <updateRateHZ>1000.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
+      <update_rate>50</update_rate>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="gazebo_ros_imu_sensor">
+        <ros>
+          <namespace>/imu</namespace>
+          <argument>~/out:=data</argument>
+        </ros>
+        <!-- <updateRate>50.0</updateRate>
+                <bodyName>imu_link</bodyName>
+                <topicName>imu/data</topicName>
+                <accelDrift>0.005 0.005 0.005</accelDrift>
+                <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+                <rateDrift>0.005 0.005 0.005 </rateDrift>
+                <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+                <headingDrift>0.005</headingDrift>
+                <headingGaussianNoise>0.005</headingGaussianNoise> -->
       </plugin>
-      <pose>0 0 0 0 0 0</pose>
     </sensor>
   </gazebo>
   <!-- Depth camera -->
@@ -156,7 +200,7 @@
             </plugin>
         </sensor>
     </gazebo> -->
-  <gazebo reference="depthCamera_link_left">
+  <!-- <gazebo reference="depthCamera_link_left">
     <sensor name="camera_link_camera" type="depth">
       <update_rate>20</update_rate>
       <camera>
@@ -171,7 +215,7 @@
           <far>3</far>
         </clip>
       </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_link_controller">
+      <plugin name="camera_link_controller" filename="libgazebo_ros_openni_kinect.so">
         <baseline>0.2</baseline>
         <alwaysOn>true</alwaysOn>
         <updateRate>1.0</updateRate>
@@ -196,73 +240,73 @@
         <hackBaseline>0</hackBaseline>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
   <!-- Foot contacts. -->
-  <gazebo reference="FR_calf">
-    <sensor name="FR_foot_contact" type="contact">
-      <update_rate>100</update_rate>
-      <plugin filename="libunitreeFootContactPlugin.so" name="contactPlugin"/>
-      <contact>
-        <collision>FR_calf_fixed_joint_lump__FR_foot_collision_1</collision>
-      </contact>
-    </sensor>
-  </gazebo>
-  <gazebo reference="FL_calf">
-    <sensor name="FL_foot_contact" type="contact">
-      <update_rate>100</update_rate>
-      <plugin filename="libunitreeFootContactPlugin.so" name="contactPlugin"/>
-      <contact>
-        <collision>FL_calf_fixed_joint_lump__FL_foot_collision_1</collision>
-      </contact>
-    </sensor>
-  </gazebo>
-  <gazebo reference="RR_calf">
-    <sensor name="RR_foot_contact" type="contact">
-      <update_rate>100</update_rate>
-      <plugin filename="libunitreeFootContactPlugin.so" name="contactPlugin"/>
-      <contact>
-        <collision>RR_calf_fixed_joint_lump__RR_foot_collision_1</collision>
-      </contact>
-    </sensor>
-  </gazebo>
-  <gazebo reference="RL_calf">
-    <sensor name="RL_foot_contact" type="contact">
-      <update_rate>100</update_rate>
-      <plugin filename="libunitreeFootContactPlugin.so" name="contactPlugin"/>
-      <contact>
-        <collision>RL_calf_fixed_joint_lump__RL_foot_collision_1</collision>
-      </contact>
-    </sensor>
-  </gazebo>
+  <!-- <gazebo reference="FR_calf">
+        <sensor name="FR_foot_contact" type="contact">
+        <update_rate>100</update_rate>
+        <plugin name="contactPlugin" filename="libunitreeFootContactPlugin.so"/>
+        <contact>
+            <collision>FR_calf_fixed_joint_lump__FR_foot_collision_1</collision>
+        </contact>
+        </sensor>
+    </gazebo>
+    <gazebo reference="FL_calf">
+        <sensor name="FL_foot_contact" type="contact">
+        <update_rate>100</update_rate>
+        <plugin name="contactPlugin" filename="libunitreeFootContactPlugin.so"/>
+        <contact>
+            <collision>FL_calf_fixed_joint_lump__FL_foot_collision_1</collision>
+        </contact>
+        </sensor>
+    </gazebo>
+    <gazebo reference="RR_calf">
+        <sensor name="RR_foot_contact" type="contact">
+        <update_rate>100</update_rate>
+        <plugin name="contactPlugin" filename="libunitreeFootContactPlugin.so"/>
+        <contact>
+            <collision>RR_calf_fixed_joint_lump__RR_foot_collision_1</collision>
+        </contact>
+        </sensor>
+    </gazebo>
+    <gazebo reference="RL_calf">
+        <sensor name="RL_foot_contact" type="contact">
+        <update_rate>100</update_rate>
+        <plugin name="contactPlugin" filename="libunitreeFootContactPlugin.so"/>
+        <contact>
+            <collision>RL_calf_fixed_joint_lump__RL_foot_collision_1</collision>
+        </contact>
+        </sensor>
+    </gazebo> -->
   <!-- Visualization of Foot contacts. -->
-  <gazebo reference="FR_foot">
-    <visual>
-      <plugin filename="libunitreeDrawForcePlugin.so" name="drawForcePlugin">
-        <topicName>FR_foot_contact</topicName>
-      </plugin>
-    </visual>
-  </gazebo>
-  <gazebo reference="FL_foot">
-    <visual>
-      <plugin filename="libunitreeDrawForcePlugin.so" name="drawForcePlugin">
-        <topicName>FL_foot_contact</topicName>
-      </plugin>
-    </visual>
-  </gazebo>
-  <gazebo reference="RR_foot">
-    <visual>
-      <plugin filename="libunitreeDrawForcePlugin.so" name="drawForcePlugin">
-        <topicName>RR_foot_contact</topicName>
-      </plugin>
-    </visual>
-  </gazebo>
-  <gazebo reference="RL_foot">
-    <visual>
-      <plugin filename="libunitreeDrawForcePlugin.so" name="drawForcePlugin">
-        <topicName>RL_foot_contact</topicName>
-      </plugin>
-    </visual>
-  </gazebo>
+  <!-- <gazebo reference="FR_foot">
+        <visual>
+            <plugin name="drawForcePlugin" filename="libunitreeDrawForcePlugin.so">
+                <topicName>FR_foot_contact</topicName>
+            </plugin>
+        </visual>
+    </gazebo>
+    <gazebo reference="FL_foot">
+        <visual>
+            <plugin name="drawForcePlugin" filename="libunitreeDrawForcePlugin.so">
+                <topicName>FL_foot_contact</topicName>
+            </plugin>
+        </visual>
+    </gazebo>
+    <gazebo reference="RR_foot">
+        <visual>
+            <plugin name="drawForcePlugin" filename="libunitreeDrawForcePlugin.so">
+                <topicName>RR_foot_contact</topicName>
+            </plugin>
+        </visual>
+    </gazebo>
+    <gazebo reference="RL_foot">
+        <visual>
+            <plugin name="drawForcePlugin" filename="libunitreeDrawForcePlugin.so">
+                <topicName>RL_foot_contact</topicName>
+            </plugin>
+        </visual>
+    </gazebo> -->
   <gazebo reference="base">
     <material>Gazebo/Green</material>
     <turnGravityOff>false</turnGravityOff>
@@ -391,19 +435,12 @@
     <kp value="1000000.0"/>
     <kd value="1.0"/>
   </gazebo>
+  <!-- <xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
+    <xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/> -->
   <!-- <xacro:include filename="$(find go1_gazebo)/launch/stairs.urdf.xacro"/> -->
   <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
   <!-- Rotor related joint and link is only for demonstrate location. -->
   <!-- Actually, the rotor will rotate and the joint is not fixed. Reduction ratio should be considered. -->
-  <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
-  <!-- <xacro:if value="$(arg DEBUG)">
-        <link name="world"/>
-        <joint name="base_static_joint" type="fixed">
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <parent link="world"/>
-            <child link="base"/>
-        </joint>
-    </xacro:if>  -->
   <link name="base">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -421,7 +458,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/trunk.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/trunk.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -467,7 +504,7 @@
     <parent link="trunk"/>
     <child link="FR_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.863" upper="0.863" velocity="30.1"/>
   </joint>
   <joint name="FR_hip_rotor_joint" type="fixed">
@@ -479,7 +516,7 @@
     <visual>
       <origin rpy="3.141592653589793 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -503,12 +540,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="0 ${PI/2.0} 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -520,7 +557,7 @@
     <parent link="FR_hip"/>
     <child link="FR_thigh"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.686" upper="4.501" velocity="30.1"/>
   </joint>
   <joint name="FR_thigh_rotor_joint" type="fixed">
@@ -532,7 +569,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -556,12 +593,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -573,7 +610,7 @@
     <parent link="FR_thigh"/>
     <child link="FR_calf"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="35.55" lower="-2.818" upper="-0.888" velocity="20.06"/>
   </joint>
   <joint name="FR_calf_rotor_joint" type="fixed">
@@ -585,7 +622,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -609,12 +646,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -675,12 +712,37 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <ros2_control name="FR" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="FR_hip_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FR_thigh_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FR_calf_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FR_foot_fixed">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
   <joint name="FL_hip_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0.1881 0.04675 0"/>
     <parent link="trunk"/>
     <child link="FL_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.863" upper="0.863" velocity="30.1"/>
   </joint>
   <joint name="FL_hip_rotor_joint" type="fixed">
@@ -692,7 +754,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -716,12 +778,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="0 ${PI/2.0} 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -733,7 +795,7 @@
     <parent link="FL_hip"/>
     <child link="FL_thigh"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.686" upper="4.501" velocity="30.1"/>
   </joint>
   <joint name="FL_thigh_rotor_joint" type="fixed">
@@ -745,7 +807,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/thigh.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -769,12 +831,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -786,7 +848,7 @@
     <parent link="FL_thigh"/>
     <child link="FL_calf"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="35.55" lower="-2.818" upper="-0.888" velocity="20.06"/>
   </joint>
   <joint name="FL_calf_rotor_joint" type="fixed">
@@ -798,7 +860,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -822,12 +884,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -888,12 +950,37 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <ros2_control name="FL" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="FL_hip_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FL_thigh_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FL_calf_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="FL_foot_fixed">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
   <joint name="RR_hip_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1881 -0.04675 0"/>
     <parent link="trunk"/>
     <child link="RR_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.863" upper="0.863" velocity="30.1"/>
   </joint>
   <joint name="RR_hip_rotor_joint" type="fixed">
@@ -905,7 +992,7 @@
     <visual>
       <origin rpy="3.141592653589793 3.141592653589793 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -929,12 +1016,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="0 ${PI/2.0} 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -946,7 +1033,7 @@
     <parent link="RR_hip"/>
     <child link="RR_thigh"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.686" upper="4.501" velocity="30.1"/>
   </joint>
   <joint name="RR_thigh_rotor_joint" type="fixed">
@@ -958,7 +1045,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -982,12 +1069,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -999,7 +1086,7 @@
     <parent link="RR_thigh"/>
     <child link="RR_calf"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="35.55" lower="-2.818" upper="-0.888" velocity="20.06"/>
   </joint>
   <joint name="RR_calf_rotor_joint" type="fixed">
@@ -1011,7 +1098,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -1035,12 +1122,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -1101,12 +1188,37 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <ros2_control name="RR" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="RR_hip_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RR_thigh_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RR_calf_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RR_foot_fixed">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
   <joint name="RL_hip_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1881 0.04675 0"/>
     <parent link="trunk"/>
     <child link="RL_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.863" upper="0.863" velocity="30.1"/>
   </joint>
   <joint name="RL_hip_rotor_joint" type="fixed">
@@ -1118,7 +1230,7 @@
     <visual>
       <origin rpy="0 3.141592653589793 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -1142,12 +1254,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="0 ${PI/2.0} 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -1159,7 +1271,7 @@
     <parent link="RL_hip"/>
     <child link="RL_thigh"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="23.7" lower="-0.686" upper="4.501" velocity="30.1"/>
   </joint>
   <joint name="RL_thigh_rotor_joint" type="fixed">
@@ -1171,7 +1283,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/thigh.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -1195,12 +1307,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -1212,7 +1324,7 @@
     <parent link="RL_thigh"/>
     <child link="RL_calf"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.01" friction="0.2"/>
+    <dynamics damping="0.0" friction="0.0"/>
     <limit effort="35.55" lower="-2.818" upper="-0.888" velocity="20.06"/>
   </joint>
   <joint name="RL_calf_rotor_joint" type="fixed">
@@ -1224,7 +1336,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/ros2/ros2_locomotion_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <!-- <material name="orange"/> -->
     </visual>
@@ -1248,12 +1360,12 @@
       </geometry>
       <material name="green"/>
     </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.02" radius="0.035"/>
-      </geometry>
-    </collision>
+    <!-- <collision>
+                <origin rpy="${PI/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.035"/>
+                </geometry>
+            </collision> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <mass value="0.089"/>
@@ -1314,464 +1426,78 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <joint name="camera_joint_face" type="fixed">
-    <origin rpy="3.141592653589793 0 0" xyz="0.2785 0.0125 0.0167"/>
-    <parent link="trunk"/>
-    <child link="camera_face"/>
-  </joint>
-  <link name="camera_face">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
-      </geometry>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="camera_optical_joint_face" type="fixed">
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
-    <parent link="camera_face"/>
-    <child link="camera_optical_face"/>
-  </joint>
-  <link name="camera_optical_face">
-        </link>
-  <gazebo reference="camera_face">
-    <!-- <material>Gazebo/Black</material> -->
-    <sensor name="camera_face_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_face_controller">
-        <baseline>0.025</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera_face_ir</cameraName>
-        <imageTopicName>/camera_face/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera_face/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera_face/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera_face/depth/camera_info</depthImageInfoTopicName>
-        <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-        <pointCloudTopicName>/cam1/point_cloud_face</pointCloudTopicName>
-        <frameName>camera_optical_face</frameName>
-        <pointCloudCutoff>0.1</pointCloudCutoff>
-        <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0045</Cx>
-        <Cy>0.0039</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <joint name="camera_joint_chin" type="fixed">
-    <origin rpy="3.141592653589793 1.5707963267948966 0" xyz="0.2522 0.0125 -0.0436"/>
-    <parent link="trunk"/>
-    <child link="camera_chin"/>
-  </joint>
-  <link name="camera_chin">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
-      </geometry>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="camera_optical_joint_chin" type="fixed">
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
-    <parent link="camera_chin"/>
-    <child link="camera_optical_chin"/>
-  </joint>
-  <link name="camera_optical_chin">
-        </link>
-  <gazebo reference="camera_chin">
-    <!-- <material>Gazebo/Black</material> -->
-    <sensor name="camera_chin_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_chin_controller">
-        <baseline>0.025</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera_chin_ir</cameraName>
-        <imageTopicName>/camera_chin/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera_chin/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera_chin/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera_chin/depth/camera_info</depthImageInfoTopicName>
-        <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-        <pointCloudTopicName>/cam2/point_cloud_chin</pointCloudTopicName>
-        <frameName>camera_optical_chin</frameName>
-        <pointCloudCutoff>0.1</pointCloudCutoff>
-        <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0045</Cx>
-        <Cy>0.0039</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <joint name="camera_joint_left" type="fixed">
-    <origin rpy="3.141592653589793 0.2618 1.5707963267948966" xyz="-0.066 0.082 -0.0176"/>
-    <parent link="trunk"/>
-    <child link="camera_left"/>
-  </joint>
-  <link name="camera_left">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
-      </geometry>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="camera_optical_joint_left" type="fixed">
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
-    <parent link="camera_left"/>
-    <child link="camera_optical_left"/>
-  </joint>
-  <link name="camera_optical_left">
-        </link>
-  <gazebo reference="camera_left">
-    <!-- <material>Gazebo/Black</material> -->
-    <sensor name="camera_left_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_left_controller">
-        <baseline>0.025</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera_left_ir</cameraName>
-        <imageTopicName>/camera_left/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera_left/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera_left/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera_left/depth/camera_info</depthImageInfoTopicName>
-        <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-        <pointCloudTopicName>/cam3/point_cloud_left</pointCloudTopicName>
-        <frameName>camera_optical_left</frameName>
-        <pointCloudCutoff>0.1</pointCloudCutoff>
-        <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0045</Cx>
-        <Cy>0.0039</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <joint name="camera_joint_right" type="fixed">
-    <origin rpy="3.141592653589793 0.2618 -1.5707963267948966" xyz="-0.041 -0.082 -0.0176"/>
-    <parent link="trunk"/>
-    <child link="camera_right"/>
-  </joint>
-  <link name="camera_right">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
-      </geometry>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="camera_optical_joint_right" type="fixed">
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
-    <parent link="camera_right"/>
-    <child link="camera_optical_right"/>
-  </joint>
-  <link name="camera_optical_right">
-        </link>
-  <gazebo reference="camera_right">
-    <!-- <material>Gazebo/Black</material> -->
-    <sensor name="camera_right_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_right_controller">
-        <baseline>0.025</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera_right_ir</cameraName>
-        <imageTopicName>/camera_right/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera_right/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera_right/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera_right/depth/camera_info</depthImageInfoTopicName>
-        <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-        <pointCloudTopicName>/cam4/point_cloud_right</pointCloudTopicName>
-        <frameName>camera_optical_right</frameName>
-        <pointCloudCutoff>0.1</pointCloudCutoff>
-        <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0045</Cx>
-        <Cy>0.0039</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <joint name="camera_joint_rearDown" type="fixed">
-    <origin rpy="3.141592653589793 1.5707963267948966 0" xyz="-0.0825 0.0125 -0.04365"/>
-    <parent link="trunk"/>
-    <child link="camera_rearDown"/>
-  </joint>
-  <link name="camera_rearDown">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
-      </geometry>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="camera_optical_joint_rearDown" type="fixed">
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
-    <parent link="camera_rearDown"/>
-    <child link="camera_optical_rearDown"/>
-  </joint>
-  <link name="camera_optical_rearDown">
-        </link>
-  <gazebo reference="camera_rearDown">
-    <!-- <material>Gazebo/Black</material> -->
-    <sensor name="camera_rearDown_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_rearDown_controller">
-        <baseline>0.025</baseline>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera_rearDown_ir</cameraName>
-        <imageTopicName>/camera_rearDown/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera_rearDown/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera_rearDown/depth/image_raw</depthImageTopicName>
-        <depthImageInfoTopicName>/camera_rearDown/depth/camera_info</depthImageInfoTopicName>
-        <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-        <pointCloudTopicName>/cam5/point_cloud_rearDown</pointCloudTopicName>
-        <frameName>camera_optical_rearDown</frameName>
-        <pointCloudCutoff>0.1</pointCloudCutoff>
-        <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0045</Cx>
-        <Cy>0.0039</Cy>
-        <focalLength>0</focalLength>
-        <hackBaseline>0</hackBaseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <joint name="camera_laserscan_joint_left" type="fixed">
-    <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-    <parent link="camera_left"/>
-    <child link="camera_laserscan_link_left"/>
-  </joint>
-  <link name="camera_laserscan_link_left">
-    </link>
-  <joint name="camera_laserscan_joint_right" type="fixed">
-    <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-    <parent link="camera_right"/>
-    <child link="camera_laserscan_link_right"/>
-  </joint>
-  <link name="camera_laserscan_link_right">
-    </link>
-  <joint name="ultraSound_joint_left" type="fixed">
-    <origin rpy="0 0.2618 1.5707963267948966" xyz="-0.0535  0.0826 0.00868"/>
-    <parent link="trunk"/>
-    <child link="ultraSound_left"/>
-  </joint>
-  <link name="ultraSound_left">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="ultraSound_joint_right" type="fixed">
-    <origin rpy="0 0.2618 -1.5707963267948966" xyz="-0.0535 -0.0826 0.00868"/>
-    <parent link="trunk"/>
-    <child link="ultraSound_right"/>
-  </joint>
-  <link name="ultraSound_right">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-  <joint name="ultraSound_joint_face" type="fixed">
-    <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
-    <parent link="trunk"/>
-    <child link="ultraSound_face"/>
-  </joint>
-  <link name="ultraSound_face">
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size=".001 .001 .001"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-  </link>
-</robot>
+  <ros2_control name="RL" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="RL_hip_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RL_thigh_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RL_calf_joint">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="RL_foot_fixed">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+  <!-- <xacro:depthCamera camID="1" name="face">
+        <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
+    </xacro:depthCamera>
 
+    <xacro:depthCamera camID="2" name="chin">
+        <origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
+    </xacro:depthCamera>
+
+    <xacro:depthCamera camID="3" name="left">
+        <origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
+    </xacro:depthCamera>
+
+    <xacro:depthCamera camID="4" name="right">
+        <origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
+    </xacro:depthCamera>
+
+    <xacro:depthCamera camID="5" name="rearDown">
+        <origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
+    </xacro:depthCamera>
+
+    <joint name="camera_laserscan_joint_left" type="fixed">
+        <origin rpy="0 0.2618 0" xyz="0 0 0"/>
+        <parent link="camera_left"/>
+        <child link="camera_laserscan_link_left"/>
+    </joint>
+
+    <link name="camera_laserscan_link_left">
+    </link>
+
+    <joint name="camera_laserscan_joint_right" type="fixed">
+        <origin rpy="0 0.2618 0" xyz="0 0 0"/>
+        <parent link="camera_right"/>
+        <child link="camera_laserscan_link_right"/>
+    </joint>
+
+    <link name="camera_laserscan_link_right">
+    </link>
+
+    <xacro:ultraSound name="left">
+        <origin rpy="0 0.2618 ${PI/2}" xyz="-0.0535  0.0826 0.00868"/>
+    </xacro:ultraSound>
+
+    <xacro:ultraSound name="right">
+        <origin rpy="0 0.2618 ${-PI/2}" xyz="-0.0535 -0.0826 0.00868"/>
+    </xacro:ultraSound>
+
+    <xacro:ultraSound name="face">
+        <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
+    </xacro:ultraSound> -->
+</robot>

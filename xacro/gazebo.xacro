@@ -1,15 +1,25 @@
 <?xml version="1.0"?>
 <robot>
     <!-- ros_control plugin -->
-    <gazebo>
+    <!-- <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/go1_gazebo</robotNamespace>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
         </plugin>
+    </gazebo> -->
+    <!-- <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+        <parameters>"file://$(find go1_description)/config/ros_control/ros_control.yaml</parameters>
+      </plugin>
+    </gazebo> -->
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+        <parameters>$(find go1_description)/config/ros_control/ros_control.yaml</parameters>
+      </plugin>
     </gazebo>
 
     <!-- Show the trajectory of trunk center. -->
-    <gazebo>
+    <!-- <gazebo>
         <plugin name="3dplot" filename="libLinkPlot3DPlugin.so">
             <frequency>10</frequency>
             <plot>
@@ -18,8 +28,21 @@
                 <material>Gazebo/Yellow</material>
             </plot>
         </plugin>
-    </gazebo>
-
+    </gazebo> -->
+    <gazebo>
+        <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+          <ros>
+              <argument>odom:=odom/ground_truth</argument>
+          </ros>
+  
+          <body_name>base</body_name>
+          <frame_name>world</frame_name>
+          <update_rate>10.0</update_rate>
+          <xyz_offset>0 0 0</xyz_offset>
+          <rpy_offset>0 0 0</rpy_offset>
+          <gaussian_noise>0.01</gaussian_noise>
+      </plugin>
+      </gazebo>
     <!-- Show the trajectory of foot. You can add another trajectory about another foot. -->
     <!-- <gazebo>
         <plugin name="3dplot" filename="libLinkPlot3DPlugin.so">
@@ -32,14 +55,14 @@
         </plugin>
     </gazebo> -->
 
-    <gazebo>
+    <!-- <gazebo>
         <plugin filename="libgazebo_ros_force.so" name="gazebo_ros_force">
             <bodyName>trunk</bodyName>
             <topicName>/apply_force/trunk</topicName>
         </plugin>
-    </gazebo>
+    </gazebo> -->
 
-    <gazebo reference="imu_link">
+    <!-- <gazebo reference="imu_link">
         <gravity>true</gravity>
         <sensor name="imu_sensor" type="imu">
             <always_on>true</always_on>
@@ -57,8 +80,28 @@
             </plugin>
             <pose>0 0 0 0 0 0</pose>
         </sensor>
+    </gazebo> -->
+    <gazebo reference="imu_link">
+        <sensor name="imu_controller" type="imu">
+            <always_on>true</always_on>
+            <update_rate>50</update_rate>
+            <plugin name="gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=data</argument>
+                </ros>
+                <!-- <updateRate>50.0</updateRate>
+                <bodyName>imu_link</bodyName>
+                <topicName>imu/data</topicName>
+                <accelDrift>0.005 0.005 0.005</accelDrift>
+                <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+                <rateDrift>0.005 0.005 0.005 </rateDrift>
+                <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+                <headingDrift>0.005</headingDrift>
+                <headingGaussianNoise>0.005</headingGaussianNoise> -->
+            </plugin>
+        </sensor>
     </gazebo>
-
     <!-- Depth camera -->
     <!-- <gazebo>
         <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
@@ -132,7 +175,7 @@
         </sensor>
     </gazebo> -->
 
-  <gazebo reference="depthCamera_link_left">
+  <!-- <gazebo reference="depthCamera_link_left">
     <sensor name="camera_link_camera" type="depth">
       <update_rate>20</update_rate>
       <camera>
@@ -172,14 +215,14 @@
         <hackBaseline>0</hackBaseline>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
 
 
 
 
     <!-- Foot contacts. -->
-    <gazebo reference="FR_calf">
+    <!-- <gazebo reference="FR_calf">
         <sensor name="FR_foot_contact" type="contact">
         <update_rate>100</update_rate>
         <plugin name="contactPlugin" filename="libunitreeFootContactPlugin.so"/>
@@ -214,10 +257,10 @@
             <collision>RL_calf_fixed_joint_lump__RL_foot_collision_1</collision>
         </contact>
         </sensor>
-    </gazebo>
+    </gazebo> -->
 
     <!-- Visualization of Foot contacts. -->
-    <gazebo reference="FR_foot">
+    <!-- <gazebo reference="FR_foot">
         <visual>
             <plugin name="drawForcePlugin" filename="libunitreeDrawForcePlugin.so">
                 <topicName>FR_foot_contact</topicName>
@@ -244,7 +287,7 @@
                 <topicName>RL_foot_contact</topicName>
             </plugin>
         </visual>
-    </gazebo>
+    </gazebo> -->
 
     <gazebo reference="base">
         <material>Gazebo/Green</material>

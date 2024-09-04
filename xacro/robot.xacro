@@ -9,8 +9,8 @@
     <xacro:include filename="$(find go1_description)/xacro/leg.xacro"/>
     <!-- <xacro:include filename="$(find go1_description)/xacro/stairs.xacro"/> -->
     <xacro:include filename="$(find go1_description)/xacro/gazebo.xacro"/>
-    <xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
-    <xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
+    <!-- <xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
+    <xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/> -->
     <!-- <xacro:include filename="$(find go1_gazebo)/launch/stairs.urdf.xacro"/> -->
 
     <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
@@ -47,7 +47,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://go1_description/meshes/trunk.dae" scale="1 1 1"/>
+                <mesh filename="file://$(find go1_description)/meshes/trunk.dae" scale="1 1 1"/>
             </geometry>
             <!-- <material name="orange"/> -->
         </visual>
@@ -99,7 +99,7 @@
     <xacro:leg name="RR" mirror="-1" mirror_dae="False"  front_hind="-1" front_hind_dae="False" />
     <xacro:leg name="RL" mirror="1"  mirror_dae="True"   front_hind="-1" front_hind_dae="False" />
 
-    <xacro:depthCamera camID="1" name="face">
+    <!-- <xacro:depthCamera camID="1" name="face">
         <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
     </xacro:depthCamera>
 
@@ -147,5 +147,5 @@
 
     <xacro:ultraSound name="face">
         <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
-    </xacro:ultraSound>
+    </xacro:ultraSound> -->
 </robot>
