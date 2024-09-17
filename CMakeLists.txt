@@ -26,4 +26,3 @@ foreach(dir IN LISTS directories)
         DESTINATION ${SHARE_DESTINATION}
     )
 endforeach()
-

@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <package format="3">
-    <name>go1_description</name>
-    <version>0.0.0</version>
-    <description>The go1_description package</description>
+  <name>go1_description</name>
+  <version>0.1.0</version>
+  <description>URDF Description package for go1_description</description>
 
-    <maintainer email="federico.rollo@leonardo.com">Federico Rollo</maintainer>
-    <license>BSD</license>
-    
-    <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
-    <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
+  <maintainer email="giuseppe.alfonso@leonardo.com">Giuseppe Alfonso</maintainer>
 
-    <export>                               
-        <build_type condition="$ROS_VERSION == 1">catkin</build_type>
-        <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type> 
-    </export> 
+  <license>BSD</license>
+
+  <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
+  <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
+
+  <export>                               
+      <build_type condition="$ROS_VERSION == 1">catkin</build_type>
+      <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type> 
+  </export> 
 </package>
