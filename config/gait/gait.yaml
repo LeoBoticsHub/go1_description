@@ -8,7 +8,18 @@
       max_linear_velocity_y : 0.25
       max_angular_velocity_z : 0.30
       com_x_translation: 0.0
-      swing_height : 0.06
+      swing_height : 0.03
       stance_depth : 0.0
       stance_duration : 0.25
-      nominal_height : 0.30
+      nominal_height : 0.28
+      # knee_orientation : ">>"       #real robot
+      # pantograph_leg : false
+      # odom_scaler: 1.0
+      # max_linear_velocity_x : 0.5
+      # max_linear_velocity_y : 0.25
+      # max_angular_velocity_z : 0.30
+      # com_x_translation: 0.0
+      # swing_height : 0.06
+      # stance_depth : 0.0
+      # stance_duration : 0.25
+      # nominal_height : 0.30
