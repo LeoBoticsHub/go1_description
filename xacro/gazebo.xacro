@@ -81,7 +81,11 @@
             <update_rate>1000</update_rate>
             <visualize>true</visualize>
             <topic>__default_topic__</topic>
-            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin_trunk">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=trunk_data</argument>
+                </ros>
                 <topicName>trunk_imu</topicName>
                 <bodyName>imu_link</bodyName>
                 <updateRateHZ>1000.0</updateRateHZ>
@@ -89,6 +93,102 @@
                 <xyzOffset>0 0 0</xyzOffset>
                 <rpyOffset>0 0 0</rpyOffset>
                 <frameName>imu_link</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="imu_link_FL_foot">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>1000</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin_FL_foot">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=FL_data</argument>
+                </ros>
+                <topicName>trunk_imu</topicName>
+                <bodyName>imu_link_FL_foot</bodyName>
+                <updateRateHZ>1000.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link_FL_foot</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="imu_link_FR_foot">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>1000</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin_FR_foot">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=FR_data</argument>
+                </ros>
+                <topicName>trunk_imu</topicName>
+                <bodyName>imu_link_FR_foot</bodyName>
+                <updateRateHZ>1000.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link_FR_foot</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="imu_link_RL_foot">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>1000</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin_RL_foot">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=RL_data</argument>
+                </ros>
+                <topicName>trunk_imu</topicName>
+                <bodyName>imu_link_RL_foot</bodyName>
+                <updateRateHZ>1000.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link_RL_foot</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="imu_link_RR_foot">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>1000</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin_RR_foot">
+                <ros>
+                    <namespace>/imu</namespace>
+                    <argument>~/out:=RR_data</argument>
+                </ros>
+                <topicName>trunk_imu</topicName>
+                <bodyName>imu_link_RR_foot</bodyName>
+                <updateRateHZ>1000.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link_RR_foot</frameName>
             </plugin>
             <pose>0 0 0 0 0 0</pose>
         </sensor>

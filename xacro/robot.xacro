@@ -99,6 +99,114 @@
     <xacro:leg name="RR" mirror="-1" mirror_dae="False"  front_hind="-1" front_hind_dae="False" />
     <xacro:leg name="RL" mirror="1"  mirror_dae="True"   front_hind="-1" front_hind_dae="False" />
 
+    <joint name="imu_joint_FL_foot" type="fixed">
+        <parent link="FL_foot"/>
+        <child link="imu_link_FL_foot"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="imu_link_FL_foot">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.001 0.001 0.001"/>
+            </geometry>
+            <!-- <material name="red"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size=".001 .001 .001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="imu_joint_FR_foot" type="fixed">
+        <parent link="FR_foot"/>
+        <child link="imu_link_FR_foot"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="imu_link_FR_foot">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.001 0.001 0.001"/>
+            </geometry>
+            <!-- <material name="red"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size=".001 .001 .001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="imu_joint_RL_foot" type="fixed">
+        <parent link="RL_foot"/>
+        <child link="imu_link_RL_foot"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="imu_link_RL_foot">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.001 0.001 0.001"/>
+            </geometry>
+            <!-- <material name="red"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size=".001 .001 .001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="imu_joint_RR_foot" type="fixed">
+        <parent link="RR_foot"/>
+        <child link="imu_link_RR_foot"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="imu_link_RR_foot">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.001 0.001 0.001"/>
+            </geometry>
+            <!-- <material name="red"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size=".001 .001 .001"/>
+            </geometry>
+        </collision>
+    </link>
+
     <xacro:depthCamera camID="1" name="face">
         <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
     </xacro:depthCamera>
