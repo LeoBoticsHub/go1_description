@@ -408,7 +408,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        hesai_lidar:
+        rslidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -603,7 +603,7 @@ Visualization Manager:
           Value: false
         d430_right_ir_optical_frame:
           Value: false
-        hesai_lidar:
+        rslidar:
           Value: false
         imu_link:
           Value: false
@@ -747,7 +747,7 @@ Visualization Manager:
               lidar_mount:
                 lidar_base_link:
                   lidar:
-                    hesai_lidar:
+                    rslidar:
                       {}
       Update Interval: 0
       Value: true
