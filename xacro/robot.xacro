@@ -148,4 +148,17 @@
     <xacro:ultraSound name="face">
         <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
     </xacro:ultraSound>
+
+
+    <!-- Sensors loading -->
+    <xacro:arg name="SENSORS" default="false"/>
+    <xacro:arg name="LIDAR" default="false"/>
+
+    <xacro:property name="LIDAR" value="$(arg LIDAR)"/>
+    <xacro:if value="$(arg SENSORS)">
+        <xacro:property name="LIDAR" value="true"/>
+    </xacro:if>
+
+    <xacro:include filename="$(find go1_description)/xacro/sensors.xacro"/>
+
 </robot>
