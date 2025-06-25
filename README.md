@@ -41,6 +41,14 @@ roslaunch go1_description upload.launch sensors:=true
 ros2 launch go1_description upload.launch.py
 ```
 
+To automatically launch RViz, launch:
+
+```bash
+ros2 launch go1_description upload.launch.py use_rviz:=true
+```
+
+by default `use_rviz:=true` is `false`.
+
 ## Environment
 
 We recommand users to run this package in Ubuntu 20.04 or 22.04 and ROS noetic, Foxy or Humble environment.
@@ -50,3 +58,4 @@ We recommand users to run this package in Ubuntu 20.04 or 22.04 and ROS noetic, 
 The package is provided by:
 
 * [Federico Rollo](https://github.com/FedericoRollo) [Mantainer]
+* [Valentina Pericu](https://github.com/valeperi) [Mantainer]
