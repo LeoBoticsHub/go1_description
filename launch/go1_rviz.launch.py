@@ -13,7 +13,16 @@ def generate_launch_description():
 
     assert os.path.exists(xacro_path), "The robot.xacro doesn't exist in " + str(xacro_path)
 
-    doc = xacro.process_file(xacro_path, mappings={'DEBUG': 'false', 'SENSORS': 'true',  'LIDAR': 'true', 'CAMERAS': 'true', 'ULTRASONIC': 'true'})
+    doc = xacro.process_file(
+        xacro_path, 
+        mappings={
+            'DEBUG': 'false',
+            'SENSORS': 'true',
+            'LIDAR': 'true',
+            'CAMERAS': 'true',
+            'ULTRASONIC': 'true'
+        }
+    )
     robot_desc = doc.toprettyxml(indent='  ')
 
     robot_state_pub = Node(
