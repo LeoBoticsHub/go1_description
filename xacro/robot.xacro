@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 
-<robot name="go1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="go1_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:arg name="DEBUG" default="false"/>
 
     <xacro:include filename="$(find go1_description)/xacro/const.xacro"/>
     <xacro:include filename="$(find go1_description)/xacro/materials.xacro"/>
     <xacro:include filename="$(find go1_description)/xacro/leg.xacro"/>
-    <!-- <xacro:include filename="$(find go1_description)/xacro/stairs.xacro"/> -->
     <xacro:include filename="$(find go1_description)/xacro/gazebo.xacro"/>
-    <!-- <xacro:include filename="$(find go1_gazebo)/launch/stairs.urdf.xacro"/> -->
 
-    <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
 
     <!-- Rotor related joint and link is only for demonstrate location. -->
     <!-- Actually, the rotor will rotate and the joint is not fixed. Reduction ratio should be considered. -->
@@ -22,11 +19,11 @@
         <joint name="base_static_joint" type="fixed">
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <parent link="world"/>
-            <child link="base"/>
+            <child link="trunk"/>
         </joint>
     </xacro:if> 
 
-    <link name="base">
+    <!-- <link name="base">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -39,7 +36,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <parent link="base"/>
         <child link="trunk"/>
-    </joint>
+    </joint> -->
 
     <link name="trunk">
         <visual>
@@ -47,7 +44,7 @@
             <geometry>
                 <mesh filename="file://$(find go1_description)/meshes/trunk.dae" scale="1 1 1"/>
             </geometry>
-            <!-- <material name="orange"/> -->
+            <material name="orange"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -82,7 +79,7 @@
             <geometry>
                 <box size="0.001 0.001 0.001"/>
             </geometry>
-            <!-- <material name="red"/> -->
+            <material name="red"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
