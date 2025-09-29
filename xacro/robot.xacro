@@ -1,19 +1,14 @@
 <?xml version="1.0"?>
 
-<robot name="go1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="go1_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:arg name="DEBUG" default="false"/>
 
     <xacro:include filename="$(find go1_description)/xacro/const.xacro"/>
     <xacro:include filename="$(find go1_description)/xacro/materials.xacro"/>
     <xacro:include filename="$(find go1_description)/xacro/leg.xacro"/>
-    <!-- <xacro:include filename="$(find go1_description)/xacro/stairs.xacro"/> -->
     <xacro:include filename="$(find go1_description)/xacro/gazebo.xacro"/>
-    <xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
-    <xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
-    <!-- <xacro:include filename="$(find go1_gazebo)/launch/stairs.urdf.xacro"/> -->
 
-    <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
 
     <!-- Rotor related joint and link is only for demonstrate location. -->
     <!-- Actually, the rotor will rotate and the joint is not fixed. Reduction ratio should be considered. -->
@@ -24,11 +19,11 @@
         <joint name="base_static_joint" type="fixed">
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <parent link="world"/>
-            <child link="base"/>
+            <child link="trunk"/>
         </joint>
     </xacro:if> 
 
-    <link name="base">
+    <!-- <link name="base">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -41,7 +36,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <parent link="base"/>
         <child link="trunk"/>
-    </joint>
+    </joint> -->
 
     <link name="trunk">
         <visual>
@@ -49,7 +44,7 @@
             <geometry>
                 <mesh filename="file://$(find go1_description)/meshes/trunk.dae" scale="1 1 1"/>
             </geometry>
-            <!-- <material name="orange"/> -->
+            <material name="orange"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -84,7 +79,7 @@
             <geometry>
                 <box size="0.001 0.001 0.001"/>
             </geometry>
-            <!-- <material name="red"/> -->
+            <material name="red"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -99,53 +94,21 @@
     <xacro:leg name="RR" mirror="-1" mirror_dae="False"  front_hind="-1" front_hind_dae="False" />
     <xacro:leg name="RL" mirror="1"  mirror_dae="True"   front_hind="-1" front_hind_dae="False" />
 
-    <xacro:depthCamera camID="1" name="face">
-        <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
-    </xacro:depthCamera>
+    <!-- Sensors loading -->
+    <xacro:arg name="SENSORS" default="false"/>
+    <xacro:arg name="LIDAR" default="false"/>
+    <xacro:arg name="CAMERAS" default="false"/>
+    <xacro:arg name="ULTRASONIC" default="false"/>
 
-    <xacro:depthCamera camID="2" name="chin">
-        <origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
-    </xacro:depthCamera>
+    <xacro:property name="LIDAR" value="$(arg LIDAR)"/>
+    <xacro:property name="CAMERAS" value="$(arg CAMERAS)"/>
+    <xacro:property name="ULTRASONIC" value="$(arg ULTRASONIC)"/>
+    <xacro:if value="$(arg SENSORS)">
+        <xacro:property name="LIDAR" value="true"/>
+        <xacro:property name="CAMERAS" value="true"/>
+        <xacro:property name="ULTRASONIC" value="true"/>
+    </xacro:if>
 
-    <xacro:depthCamera camID="3" name="left">
-        <origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
-    </xacro:depthCamera>
+    <xacro:include filename="$(find go1_description)/xacro/sensors.xacro"/>
 
-    <xacro:depthCamera camID="4" name="right">
-        <origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
-    </xacro:depthCamera>
-
-    <xacro:depthCamera camID="5" name="rearDown">
-        <origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
-    </xacro:depthCamera>
-
-    <joint name="camera_laserscan_joint_left" type="fixed">
-        <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-        <parent link="camera_left"/>
-        <child link="camera_laserscan_link_left"/>
-    </joint>
-
-    <link name="camera_laserscan_link_left">
-    </link>
-
-    <joint name="camera_laserscan_joint_right" type="fixed">
-        <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-        <parent link="camera_right"/>
-        <child link="camera_laserscan_link_right"/>
-    </joint>
-
-    <link name="camera_laserscan_link_right">
-    </link>
-
-    <xacro:ultraSound name="left">
-        <origin rpy="0 0.2618 ${PI/2}" xyz="-0.0535  0.0826 0.00868"/>
-    </xacro:ultraSound>
-
-    <xacro:ultraSound name="right">
-        <origin rpy="0 0.2618 ${-PI/2}" xyz="-0.0535 -0.0826 0.00868"/>
-    </xacro:ultraSound>
-
-    <xacro:ultraSound name="face">
-        <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
-    </xacro:ultraSound>
 </robot>

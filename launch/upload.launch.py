@@ -14,7 +14,7 @@ def generate_launch_description():
     # Args
     use_rviz = LaunchConfiguration('use_rviz')
 
-    DeclareLaunchArgument(
+    use_rviz_arg = DeclareLaunchArgument(
         'use_rviz',
         default_value='False'
     )
@@ -30,8 +30,16 @@ def generate_launch_description():
     pkg_path = get_package_share_directory("go1_description")
     xacro_path = os.path.join(pkg_path, 'xacro/robot.xacro')
     assert os.path.exists(xacro_path), "The robot.xacro doesnt exist in " + str(xacro_path)
-    # doc = xacro.process_file(xacro_path, mappings={'DEBUG': 'false', 'SENSORS': 'true',  'LIDAR': 'true', 'CAMERAS': 'true'})
-    doc = xacro.process_file(xacro_path)
+    doc = xacro.process_file(
+        xacro_path, 
+        mappings={
+            'DEBUG': 'false',
+            'SENSORS': 'true',
+            'LIDAR': 'true',
+            'CAMERAS': 'true',
+            'ULTRASONIC': 'true'
+        }
+    )
     robot_desc = doc.toprettyxml(indent='  ')
 
     robot_state_pub = Node(
@@ -54,4 +62,4 @@ def generate_launch_description():
         arguments=['-d', [os.path.join(pkg_path, 'rviz', 'ros2_robot_description.rviz')]]
     )
     
-    return LaunchDescription([tf_ns_arg, robot_state_pub, rviz])
+    return LaunchDescription([tf_ns_arg, use_rviz_arg, robot_state_pub, rviz])

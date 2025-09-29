@@ -47,7 +47,7 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
-      Description File: /home/frollo/ros_workspaces/ros2/unitree_ws/src/b1_description/xacro/robot.urdf
+      Description File: /home/frollo/ros_workspaces/ros2/unitree_ws/src/go1_description/xacro/robot.urdf
       Description Source: File
       Description Topic:
         Depth: 5
@@ -407,7 +407,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        hesai_lidar:
+        rslidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -602,7 +602,7 @@ Visualization Manager:
           Value: false
         d430_right_ir_optical_frame:
           Value: false
-        hesai_lidar:
+        rslidar:
           Value: false
         imu_link:
           Value: false
@@ -743,7 +743,7 @@ Visualization Manager:
             lidar_mount:
               lidar_base_link:
                 lidar:
-                  hesai_lidar:
+                  rslidar:
                     {}
       Update Interval: 0
       Value: true
