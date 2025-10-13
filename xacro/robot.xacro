@@ -102,11 +102,11 @@
 
     <xacro:property name="LIDAR" value="$(arg LIDAR)"/>
     <xacro:property name="CAMERAS" value="$(arg CAMERAS)"/>
-    <xacro:property name="ULTRASONIC" value="$(arg ULTRASONIC)"/>
+    <xacro:property name="ULTRASOUND" value="$(arg ULTRASONIC)"/>
     <xacro:if value="$(arg SENSORS)">
         <xacro:property name="LIDAR" value="true"/>
         <xacro:property name="CAMERAS" value="true"/>
-        <xacro:property name="ULTRASONIC" value="true"/>
+        <xacro:property name="ULTRASOUND" value="true"/>
     </xacro:if>
 
     <xacro:include filename="$(find go1_description)/xacro/sensors.xacro"/>
