@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:include filename="$(find sensors_description)/xacro/VLP-16.urdf.xacro"/>
+    <xacro:include filename="$(find sensors_description)/xacro/robosense_lidar_16.xacro"/>
     <xacro:include filename="$(find sensors_description)/xacro/go1_depth_camera.xacro"/>
     <xacro:include filename="$(find sensors_description)/xacro/go1_ultrasound.xacro"/>
 
@@ -39,9 +39,9 @@
             <material>Gazebo/White</material>
         </gazebo>
 
-        <xacro:VLP-16 parent="lidar_mount" name="lidar" topic="/rslidar_points" sim_ignition="true">
+        <xacro:robosense_lidar_16 parent="lidar_mount" name="lidar" topic="/rslidar" sim_ignition="true">
             <origin xyz="0 0 0.025" rpy="0 0 0" />
-        </xacro:VLP-16>
+        </xacro:robosense_lidar_16>
 
         <link name="rslidar"/>
         <joint name="rslidar_joint" type="fixed">
