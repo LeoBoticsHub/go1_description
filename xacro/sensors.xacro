@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:include filename="$(find sensors_description)/xacro/VLP-16.urdf.xacro"/>
-    <xacro:include filename="$(find sensors_description)/xacro/depthCamera.xacro"/>
-    <xacro:include filename="$(find sensors_description)/xacro/ultraSound.xacro"/>
+    <xacro:include filename="$(find sensors_description)/xacro/robosense_lidar_16.xacro"/>
+    <xacro:include filename="$(find sensors_description)/xacro/go1_depth_camera.xacro"/>
+    <xacro:include filename="$(find sensors_description)/xacro/go1_ultrasound.xacro"/>
 
     <!-- Lidar -->
     <xacro:if value="${LIDAR}">
@@ -40,10 +39,9 @@
             <material>Gazebo/White</material>
         </gazebo>
 
-        <xacro:VLP-16 parent="lidar_mount" name="lidar" topic="/rslidar_points"
-                    organize_cloud="true" hz="10" gpu="true">
+        <xacro:robosense_lidar_16 parent="lidar_mount" name="lidar" topic="/rslidar" sim_ignition="true">
             <origin xyz="0 0 0.025" rpy="0 0 0" />
-        </xacro:VLP-16>
+        </xacro:robosense_lidar_16>
 
         <link name="rslidar"/>
         <joint name="rslidar_joint" type="fixed">
@@ -58,29 +56,29 @@
     <xacro:if value="${CAMERAS}">
 
         <!-- Face -->
-        <xacro:depthCamera camID="1" name="face">
+        <xacro:go1_depth_camera camID="1" name="face" sim_gazebo="true">
             <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
-        </xacro:depthCamera>
+        </xacro:go1_depth_camera>
 
         <!-- Chin -->
-        <xacro:depthCamera camID="2" name="chin">
+        <xacro:go1_depth_camera camID="2" name="chin" sim_gazebo="true">
             <origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
-        </xacro:depthCamera>
+        </xacro:go1_depth_camera>
 
         <!-- Left -->        
-        <xacro:depthCamera camID="3" name="left">
+        <xacro:go1_depth_camera camID="3" name="left" sim_gazebo="true">
             <origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
-        </xacro:depthCamera>
+        </xacro:go1_depth_camera>
 
         <!-- Right -->
-        <xacro:depthCamera camID="4" name="right">
+        <xacro:go1_depth_camera camID="4" name="right" sim_gazebo="true">
             <origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
-        </xacro:depthCamera>
+        </xacro:go1_depth_camera>
 
         <!-- Rear Down -->
-        <xacro:depthCamera camID="5" name="rearDown">
+        <xacro:go1_depth_camera camID="5" name="rearDown" sim_gazebo="true">
             <origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
-        </xacro:depthCamera>
+        </xacro:go1_depth_camera>
 
         <joint name="camera_laserscan_joint_left" type="fixed">
             <origin rpy="0 0.2618 0" xyz="0 0 0"/>
@@ -102,21 +100,21 @@
     </xacro:if> 
 
     <!-- Ultrasonic Sensors -->
-    <xacro:if value="${ULTRASONIC}">
+    <xacro:if value="${ULTRASOUND}">
         <!--Left-->
-        <xacro:ultraSound name="left">
+        <xacro:go1_ultrasound name="left">
             <origin rpy="0 0.2618 ${PI/2}" xyz="-0.0535  0.0826 0.00868"/>
-        </xacro:ultraSound>
+        </xacro:go1_ultrasound>
 
         <!--Right-->
-        <xacro:ultraSound name="right">
+        <xacro:go1_ultrasound name="right">
             <origin rpy="0 0.2618 ${-PI/2}" xyz="-0.0535 -0.0826 0.00868"/>
-        </xacro:ultraSound>
+        </xacro:go1_ultrasound>
 
         <!--Face-->
-        <xacro:ultraSound name="face">
+        <xacro:go1_ultrasound name="face">
             <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
-        </xacro:ultraSound>
+        </xacro:go1_ultrasound>
     </xacro:if> 
 
 </robot>
