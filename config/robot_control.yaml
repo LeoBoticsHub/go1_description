@@ -1,70 +1,155 @@
-go1_gazebo:
-    # Publish all joint states -----------------------------------
-    joint_state_controller:
-        type: joint_state_controller/JointStateController
-        publish_rate: 1000  
+# Controller Manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 400  # Hz
 
-    # FL Controllers ---------------------------------------
-    FL_hip_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FL_hip_joint
-        pid: {p: 100.0, i: 0.0, d: 5.0}
+    # Define the available controllers
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
-    FL_thigh_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FL_thigh_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
 
-    FL_calf_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FL_calf_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    unitree_guide_controller:
+      type: unitree_guide_controller/UnitreeGuideController
 
-    # FR Controllers ---------------------------------------
-    FR_hip_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FR_hip_joint
-        pid: {p: 100.0, i: 0.0, d: 5.0}
+    ocs2_quadruped_controller:
+      type: ocs2_quadruped_controller/Ocs2QuadrupedController
 
-    FR_thigh_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FR_thigh_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    joint_group_velocity_controller:
+        type: velocity_controllers/JointGroupVelocityController
 
-    FR_calf_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: FR_calf_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
 
-    # RL Controllers ---------------------------------------
-    RL_hip_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RL_hip_joint
-        pid: {p: 100.0, i: 0.0, d: 5.0}
+unitree_guide_controller:
+  ros__parameters:
+    update_rate: 200  # Hz
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
 
-    RL_thigh_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RL_thigh_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    command_interfaces:
+      - effort
+      - position
+      - velocity
+      - kp
+      - kd
 
-    RL_calf_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RL_calf_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    state_interfaces:
+      - effort
+      - position
+      - velocity
 
-    # RR Controllers ---------------------------------------
-    RR_hip_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RR_hip_joint
-        pid: {p: 100.0, i: 0.0, d: 5.0}
+    feet_names:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
 
-    RR_thigh_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RR_thigh_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    imu_name: "imu_sensor"
+    base_name: "base"
 
-    RR_calf_controller:
-        type: unitree_legged_control/UnitreeJointController
-        joint: RR_calf_joint
-        pid: {p: 300.0, i: 0.0, d: 8.0}
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
 
+ocs2_quadruped_controller:
+  ros__parameters:
+    update_rate: 400  # Hz
+    robot_pkg: "go1_description"
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+
+    command_interfaces:
+      - effort
+      - position
+      - velocity
+      - kp
+      - kd
+
+    state_interfaces:
+      - effort
+      - position
+      - velocity
+
+    feet:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+
+    imu_name: "imu_sensor"
+    base_name: "base"
+
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+
+    foot_force_name: "foot_force"
+    foot_force_interfaces:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+joint_group_velocity_controller:
+    ros__parameters:
+      joints:
+        - RF_HAA
+        - RF_HFE
+        - RF_KFE
+        - LF_HAA
+        - LF_HFE
+        - LF_KFE
+        - RH_HAA
+        - RH_HFE
+        - RH_KFE
+        - LH_HAA
+        - LH_HFE
+        - LH_KFE
+      command_interfaces:
+      - velocity
+      state_interfaces:
+      - position
+      - velocity
