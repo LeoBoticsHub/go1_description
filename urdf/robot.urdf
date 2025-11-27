@@ -38,12 +38,12 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
   <ros2_control name="GazeboSystem" type="system">
-    <!-- <hardware>
-			<plugin>gz_ros2_control/GazeboSimSystem</plugin>
-		</hardware> -->
     <hardware>
-      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
+    <!-- <hardware>
+			<plugin>ign_ros2_control/IgnitionSystem</plugin>
+		</hardware> -->
     <joint name="LF_HAA">
       <command_interface name="effort"/>
       <command_interface initial_value="0.0" name="velocity"/>
@@ -166,8 +166,8 @@
     </sensor>
   </ros2_control>
   <gazebo>
-    <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-      <parameters>/home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/config/gazebo.yaml</parameters>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>/home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/config/gazebo.yaml</parameters>
     </plugin>
     <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu">
 		</plugin>
@@ -178,7 +178,7 @@
     <self_collide>1</self_collide>
   </gazebo>
   <gazebo>
-    <plugin filename="ignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
+    <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
       <dimensions>3</dimensions>
     </plugin>
   </gazebo>
@@ -374,7 +374,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/trunk.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/trunk.dae" scale="1 1 1"/>
       </geometry>
       <material name="light-grey"/>
     </visual>
@@ -432,7 +432,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <material name="deep-grey"/>
     </visual>
@@ -478,7 +478,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -527,7 +527,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <material name="light-grey"/>
     </visual>
@@ -652,7 +652,7 @@
     <visual>
       <origin rpy="0 3.141592653589793 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <material name="deep-grey"/>
     </visual>
@@ -698,7 +698,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/thigh.dae" scale="1 1 1"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -747,7 +747,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <material name="light-grey"/>
     </visual>
@@ -872,7 +872,7 @@
     <visual>
       <origin rpy="3.141592653589793 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <material name="deep-grey"/>
     </visual>
@@ -918,7 +918,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -967,7 +967,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <material name="light-grey"/>
     </visual>
@@ -1092,7 +1092,7 @@
     <visual>
       <origin rpy="3.141592653589793 3.141592653589793 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/hip.dae" scale="1 1 1"/>
       </geometry>
       <material name="deep-grey"/>
     </visual>
@@ -1138,7 +1138,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/thigh_mirror.dae" scale="1 1 1"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -1187,7 +1187,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/calf.dae" scale="1 1 1"/>
       </geometry>
       <material name="light-grey"/>
     </visual>
@@ -1310,7 +1310,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <inertial>
@@ -1384,7 +1384,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <inertial>
@@ -1458,7 +1458,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <inertial>
@@ -1532,7 +1532,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <inertial>
@@ -1606,7 +1606,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/depthCamera.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <inertial>
@@ -1694,7 +1694,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1719,7 +1719,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1744,7 +1744,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
+        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/go1_description/share/go1_description/meshes/ultraSound.dae" scale="1 1 1"/>
       </geometry>
       <material name="black"/>
     </visual>
