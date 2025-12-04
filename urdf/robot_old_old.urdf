@@ -343,48 +343,6 @@
 	<xacro:ft_sensor name="LH"/>
 	<xacro:ft_sensor name="RF"/>
 	<xacro:ft_sensor name="RH"/> -->
-  <gazebo reference="lidar_link">
-    <sensor name="gpu_lidar" type="gpu_lidar">
-      <update_rate>10</update_rate>
-      <topic>scan</topic>
-      <gz_frame_id>lidar_link</gz_frame_id>
-      <lidar>
-        <scan>
-          <horizontal>
-            <samples>32</samples>
-            <!--(max_angle-min_angle)/samples * resolution -->
-            <resolution>1</resolution>
-            <min_angle>-3.14156</min_angle>
-            <max_angle>3.14156</max_angle>
-          </horizontal>
-          <!-- Dirty hack for fake lidar detections with ogre 1 rendering in VM -->
-          <!-- <vertical>
-						<samples>3</samples>
-						<min_angle>-0.001</min_angle>
-						<max_angle>0.001</max_angle>
-					</vertical> -->
-          <vertical>
-            <samples>32</samples>
-            <min_angle>-0.1</min_angle>
-            <max_angle>0.1862</max_angle>
-          </vertical>
-        </scan>
-        <range>
-          <min>0.05</min>
-          <max>10.0</max>
-          <resolution>0.01</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-        <frame_id>lidar_link</frame_id>
-      </lidar>
-      <always_on>1</always_on>
-      <visualize>true</visualize>
-    </sensor>
-  </gazebo>
   <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
   <!-- Rotor related joint and link is only for demonstrate location. -->
   <!-- Actually, the rotor will rotate and the joint is not fixed. Reduction ratio should be considered. -->
@@ -1411,55 +1369,6 @@
   <!--                </plugin>-->
   <!--            </sensor>-->
   <!--        </gazebo>-->
-  <gazebo reference="camera_face">
-    <!-- &lt;!&ndash; <material>Gazebo/Black</material> &ndash;&gt; -->
-    <material>Gazebo/Black</material>
-    <sensor name="camera_face_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <vertical>
-          <samples>32</samples>
-          <min_angle>-0.5353</min_angle>
-          <max_angle>0.1862</max_angle>
-        </vertical>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <!--                <plugin name="camera_${name}_controller" filename="libgazebo_ros_openni_kinect.so">-->
-      <!--                    <baseline>0.025</baseline>-->
-      <!--                    <alwaysOn>true</alwaysOn>-->
-      <!--                    <updateRate>0.0</updateRate>-->
-      <!--                    <cameraName>camera_${name}_ir</cameraName>-->
-      <!--                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>-->
-      <!--                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>-->
-      <!--                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>-->
-      <!--                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>-->
-      <!--                    &lt;!&ndash; <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> &ndash;&gt;-->
-      <!--                    <pointCloudTopicName>/cam${camID}/point_cloud_${name}</pointCloudTopicName>-->
-      <!--                    <frameName>camera_optical_${name}</frameName>-->
-      <!--                    <pointCloudCutoff>0.1</pointCloudCutoff>-->
-      <!--                    <pointCloudCutoffMax>1.5</pointCloudCutoffMax>-->
-      <!--                    <distortionK1>0.0</distortionK1>-->
-      <!--                    <distortionK2>0.0</distortionK2>-->
-      <!--                    <distortionK3>0.0</distortionK3>-->
-      <!--                    <distortionT1>0.0</distortionT1>-->
-      <!--                    <distortionT2>0.0</distortionT2>-->
-      <!--                    <CxPrime>0</CxPrime>-->
-      <!--                    <Cx>0.0045</Cx>-->
-      <!--                    <Cy>0.0039</Cy>-->
-      <!--                    <focalLength>0</focalLength>-->
-      <!--                    <hackBaseline>0</hackBaseline>-->
-      <!--                </plugin>-->
-    </sensor>
-  </gazebo>
   <joint name="camera_joint_chin" type="fixed">
     <origin rpy="3.141592653589793 1.5707963267948966 0" xyz="0.2522 0.0125 -0.0436"/>
     <parent link="base"/>
@@ -1534,55 +1443,6 @@
   <!--                </plugin>-->
   <!--            </sensor>-->
   <!--        </gazebo>-->
-  <gazebo reference="camera_chin">
-    <!-- &lt;!&ndash; <material>Gazebo/Black</material> &ndash;&gt; -->
-    <material>Gazebo/Black</material>
-    <sensor name="camera_chin_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <vertical>
-          <samples>32</samples>
-          <min_angle>-0.5353</min_angle>
-          <max_angle>0.1862</max_angle>
-        </vertical>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <!--                <plugin name="camera_${name}_controller" filename="libgazebo_ros_openni_kinect.so">-->
-      <!--                    <baseline>0.025</baseline>-->
-      <!--                    <alwaysOn>true</alwaysOn>-->
-      <!--                    <updateRate>0.0</updateRate>-->
-      <!--                    <cameraName>camera_${name}_ir</cameraName>-->
-      <!--                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>-->
-      <!--                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>-->
-      <!--                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>-->
-      <!--                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>-->
-      <!--                    &lt;!&ndash; <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> &ndash;&gt;-->
-      <!--                    <pointCloudTopicName>/cam${camID}/point_cloud_${name}</pointCloudTopicName>-->
-      <!--                    <frameName>camera_optical_${name}</frameName>-->
-      <!--                    <pointCloudCutoff>0.1</pointCloudCutoff>-->
-      <!--                    <pointCloudCutoffMax>1.5</pointCloudCutoffMax>-->
-      <!--                    <distortionK1>0.0</distortionK1>-->
-      <!--                    <distortionK2>0.0</distortionK2>-->
-      <!--                    <distortionK3>0.0</distortionK3>-->
-      <!--                    <distortionT1>0.0</distortionT1>-->
-      <!--                    <distortionT2>0.0</distortionT2>-->
-      <!--                    <CxPrime>0</CxPrime>-->
-      <!--                    <Cx>0.0045</Cx>-->
-      <!--                    <Cy>0.0039</Cy>-->
-      <!--                    <focalLength>0</focalLength>-->
-      <!--                    <hackBaseline>0</hackBaseline>-->
-      <!--                </plugin>-->
-    </sensor>
-  </gazebo>
   <joint name="camera_joint_left" type="fixed">
     <origin rpy="3.141592653589793 0.2618 1.5707963267948966" xyz="-0.066 0.082 -0.0176"/>
     <parent link="base"/>
@@ -1657,55 +1517,6 @@
   <!--                </plugin>-->
   <!--            </sensor>-->
   <!--        </gazebo>-->
-  <gazebo reference="camera_left">
-    <!-- &lt;!&ndash; <material>Gazebo/Black</material> &ndash;&gt; -->
-    <material>Gazebo/Black</material>
-    <sensor name="camera_left_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <vertical>
-          <samples>32</samples>
-          <min_angle>-0.5353</min_angle>
-          <max_angle>0.1862</max_angle>
-        </vertical>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <!--                <plugin name="camera_${name}_controller" filename="libgazebo_ros_openni_kinect.so">-->
-      <!--                    <baseline>0.025</baseline>-->
-      <!--                    <alwaysOn>true</alwaysOn>-->
-      <!--                    <updateRate>0.0</updateRate>-->
-      <!--                    <cameraName>camera_${name}_ir</cameraName>-->
-      <!--                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>-->
-      <!--                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>-->
-      <!--                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>-->
-      <!--                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>-->
-      <!--                    &lt;!&ndash; <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> &ndash;&gt;-->
-      <!--                    <pointCloudTopicName>/cam${camID}/point_cloud_${name}</pointCloudTopicName>-->
-      <!--                    <frameName>camera_optical_${name}</frameName>-->
-      <!--                    <pointCloudCutoff>0.1</pointCloudCutoff>-->
-      <!--                    <pointCloudCutoffMax>1.5</pointCloudCutoffMax>-->
-      <!--                    <distortionK1>0.0</distortionK1>-->
-      <!--                    <distortionK2>0.0</distortionK2>-->
-      <!--                    <distortionK3>0.0</distortionK3>-->
-      <!--                    <distortionT1>0.0</distortionT1>-->
-      <!--                    <distortionT2>0.0</distortionT2>-->
-      <!--                    <CxPrime>0</CxPrime>-->
-      <!--                    <Cx>0.0045</Cx>-->
-      <!--                    <Cy>0.0039</Cy>-->
-      <!--                    <focalLength>0</focalLength>-->
-      <!--                    <hackBaseline>0</hackBaseline>-->
-      <!--                </plugin>-->
-    </sensor>
-  </gazebo>
   <joint name="camera_joint_right" type="fixed">
     <origin rpy="3.141592653589793 0.2618 -1.5707963267948966" xyz="-0.041 -0.082 -0.0176"/>
     <parent link="base"/>
@@ -1780,55 +1591,6 @@
   <!--                </plugin>-->
   <!--            </sensor>-->
   <!--        </gazebo>-->
-  <gazebo reference="camera_right">
-    <!-- &lt;!&ndash; <material>Gazebo/Black</material> &ndash;&gt; -->
-    <material>Gazebo/Black</material>
-    <sensor name="camera_right_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <vertical>
-          <samples>32</samples>
-          <min_angle>-0.5353</min_angle>
-          <max_angle>0.1862</max_angle>
-        </vertical>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <!--                <plugin name="camera_${name}_controller" filename="libgazebo_ros_openni_kinect.so">-->
-      <!--                    <baseline>0.025</baseline>-->
-      <!--                    <alwaysOn>true</alwaysOn>-->
-      <!--                    <updateRate>0.0</updateRate>-->
-      <!--                    <cameraName>camera_${name}_ir</cameraName>-->
-      <!--                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>-->
-      <!--                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>-->
-      <!--                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>-->
-      <!--                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>-->
-      <!--                    &lt;!&ndash; <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> &ndash;&gt;-->
-      <!--                    <pointCloudTopicName>/cam${camID}/point_cloud_${name}</pointCloudTopicName>-->
-      <!--                    <frameName>camera_optical_${name}</frameName>-->
-      <!--                    <pointCloudCutoff>0.1</pointCloudCutoff>-->
-      <!--                    <pointCloudCutoffMax>1.5</pointCloudCutoffMax>-->
-      <!--                    <distortionK1>0.0</distortionK1>-->
-      <!--                    <distortionK2>0.0</distortionK2>-->
-      <!--                    <distortionK3>0.0</distortionK3>-->
-      <!--                    <distortionT1>0.0</distortionT1>-->
-      <!--                    <distortionT2>0.0</distortionT2>-->
-      <!--                    <CxPrime>0</CxPrime>-->
-      <!--                    <Cx>0.0045</Cx>-->
-      <!--                    <Cy>0.0039</Cy>-->
-      <!--                    <focalLength>0</focalLength>-->
-      <!--                    <hackBaseline>0</hackBaseline>-->
-      <!--                </plugin>-->
-    </sensor>
-  </gazebo>
   <joint name="camera_joint_rearDown" type="fixed">
     <origin rpy="3.141592653589793 1.5707963267948966 0" xyz="-0.0825 0.0125 -0.04365"/>
     <parent link="base"/>
@@ -1903,55 +1665,6 @@
   <!--                </plugin>-->
   <!--            </sensor>-->
   <!--        </gazebo>-->
-  <gazebo reference="camera_rearDown">
-    <!-- &lt;!&ndash; <material>Gazebo/Black</material> &ndash;&gt; -->
-    <material>Gazebo/Black</material>
-    <sensor name="camera_rearDown_camera" type="depth">
-      <update_rate>16</update_rate>
-      <camera>
-        <horizontal_fov>2.094</horizontal_fov>
-        <image>
-          <width>928</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <vertical>
-          <samples>32</samples>
-          <min_angle>-0.5353</min_angle>
-          <max_angle>0.1862</max_angle>
-        </vertical>
-        <clip>
-          <near>0.1</near>
-          <far>5</far>
-        </clip>
-      </camera>
-      <!--                <plugin name="camera_${name}_controller" filename="libgazebo_ros_openni_kinect.so">-->
-      <!--                    <baseline>0.025</baseline>-->
-      <!--                    <alwaysOn>true</alwaysOn>-->
-      <!--                    <updateRate>0.0</updateRate>-->
-      <!--                    <cameraName>camera_${name}_ir</cameraName>-->
-      <!--                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>-->
-      <!--                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>-->
-      <!--                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>-->
-      <!--                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>-->
-      <!--                    &lt;!&ndash; <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> &ndash;&gt;-->
-      <!--                    <pointCloudTopicName>/cam${camID}/point_cloud_${name}</pointCloudTopicName>-->
-      <!--                    <frameName>camera_optical_${name}</frameName>-->
-      <!--                    <pointCloudCutoff>0.1</pointCloudCutoff>-->
-      <!--                    <pointCloudCutoffMax>1.5</pointCloudCutoffMax>-->
-      <!--                    <distortionK1>0.0</distortionK1>-->
-      <!--                    <distortionK2>0.0</distortionK2>-->
-      <!--                    <distortionK3>0.0</distortionK3>-->
-      <!--                    <distortionT1>0.0</distortionT1>-->
-      <!--                    <distortionT2>0.0</distortionT2>-->
-      <!--                    <CxPrime>0</CxPrime>-->
-      <!--                    <Cx>0.0045</Cx>-->
-      <!--                    <Cy>0.0039</Cy>-->
-      <!--                    <focalLength>0</focalLength>-->
-      <!--                    <hackBaseline>0</hackBaseline>-->
-      <!--                </plugin>-->
-    </sensor>
-  </gazebo>
   <joint name="camera_laserscan_joint_left" type="fixed">
     <origin rpy="0 0.2618 0" xyz="0 0 0"/>
     <parent link="camera_left"/>
@@ -2040,30 +1753,5 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
-  </link>
-  <joint name="lidar_joint" type="fixed">
-    <origin rpy="0.0 0 0" xyz="0.0 0 0.04675"/>
-    <child link="lidar_link"/>
-    <parent link="base"/>
-    <axis xyz="0 0 1"/>
-  </joint>
-  <link name="lidar_link">
-    <inertial>
-      <mass value="1e-5"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-    </inertial>
-    <collision name="collision">
-      <origin rpy="1.57 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/sensors_description/share/sensors_description/meshes/robosense_lidar_16.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-    </collision>
-    <visual name="scan_link_visual">
-      <origin rpy="1.57 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/sensors_description/share/sensors_description/meshes/robosense_lidar_16.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-    </visual>
   </link>
 </robot>
