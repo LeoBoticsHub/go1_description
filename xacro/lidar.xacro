@@ -19,14 +19,14 @@
                     izz="1e-6"
                 />
             </inertial>
-            <collision name='collision'>
+            <collision name='lidar_link_collision'>
                 <origin xyz="0 0 0" rpy="1.57 0 0"/> 
                 <geometry>
                     <mesh filename = "file://$(find sensors_description)/meshes/robosense_lidar_16.stl" scale ="0.001 0.001 0.001"/>
                 </geometry>
             </collision>
 
-            <visual name='scan_link_visual'>
+            <visual name='lidar_link_visual'>
                 <origin xyz="0 0 0" rpy="1.57 0 0"/>
                 <geometry>
                     <mesh filename = "file://$(find sensors_description)/meshes/robosense_lidar_16.stl" scale ="0.001 0.001 0.001"/>

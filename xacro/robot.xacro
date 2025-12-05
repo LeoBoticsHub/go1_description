@@ -13,6 +13,7 @@
 	<xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/lidar.xacro"/>
+	<xacro:include filename="$(find sensors_description)/xacro/gps.xacro"/>
 
 	<xacro:if value="$(arg GAZEBO)">
 		<xacro:if value="$(arg CLASSIC)">
@@ -165,4 +166,7 @@
 	<xacro:lidar>
         <origin xyz="0.0 0 0.04675" rpy="0.0 0 0"/>
 	</xacro:lidar>
+	<xacro:gps parent="base">
+		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+	</xacro:gps>
 </robot>

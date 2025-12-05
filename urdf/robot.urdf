@@ -357,7 +357,6 @@
             <min_angle>-3.14156</min_angle>
             <max_angle>3.14156</max_angle>
           </horizontal>
-          <!-- Dirty hack for fake lidar detections with ogre 1 rendering in VM -->
           <!-- <vertical>
 						<samples>3</samples>
 						<min_angle>-0.001</min_angle>
@@ -383,6 +382,14 @@
       </lidar>
       <always_on>1</always_on>
       <visualize>true</visualize>
+    </sensor>
+  </gazebo>
+  <gazebo reference="gps_link">
+    <sensor name="gps" type="navsat">
+      <always_on>1</always_on>
+      <update_rate>10</update_rate>
+      <topic>gps</topic>
+      <gz_frame_id>gps_link</gz_frame_id>
     </sensor>
   </gazebo>
   <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
@@ -2053,17 +2060,24 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
-    <collision name="collision">
+    <collision name="lidar_link_collision">
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/sensors_description/share/sensors_description/meshes/robosense_lidar_16.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
-    <visual name="scan_link_visual">
+    <visual name="lidar_link_visual">
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/sensors_description/share/sensors_description/meshes/robosense_lidar_16.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
   </link>
+  <joint name="gps_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base"/>
+    <child link="gps_link"/>
+  </joint>
+  <link name="gps_link">
+        </link>
 </robot>
