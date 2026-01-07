@@ -12,8 +12,11 @@
 
 	<xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
-	<xacro:include filename="$(find go1_description)/xacro/lidar.xacro"/>
+	<!-- <xacro:include filename="$(find go1_description)/xacro/lidar.xacro"/> -->
 	<xacro:include filename="$(find sensors_description)/xacro/gps.xacro"/>
+
+	<xacro:include filename="$(find sensors_description)/xacro/robosense_lidar_16.xacro"/>
+	<xacro:include filename="$(find sensors_description)/xacro/lidar_3d.gazebo.xacro"/>
 
 	<xacro:if value="$(arg GAZEBO)">
 		<xacro:if value="$(arg CLASSIC)">
@@ -163,9 +166,16 @@
 	<xacro:ultraSound name="face">
 		<origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
 	</xacro:ultraSound>
-	<xacro:lidar>
+	<!-- <xacro:lidar>
         <origin xyz="0.0 0 0.04675" rpy="0.0 0 0"/>
-	</xacro:lidar>
+	</xacro:lidar> -->
+	<xacro:robosense_lidar_16 
+		name="lidar"
+		parent="base"
+		sim_ignition="true"
+		topic="/lidar_3d">
+		<origin xyz="0 0 0.04675" rpy="0 0 0"/>
+	</xacro:robosense_lidar_16>
 	<xacro:gps parent="base">
 		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 	</xacro:gps>
