@@ -170,7 +170,7 @@
         <origin xyz="0.0 0 0.04675" rpy="0.0 0 0"/>
 	</xacro:lidar> -->
 	<xacro:robosense_lidar_16 
-		name="lidar"
+		name="rslidar"
 		parent="base"
 		sim_ignition="true"
 		topic="/lidar_3d">

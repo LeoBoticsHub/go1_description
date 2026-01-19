@@ -2038,15 +2038,15 @@
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
   </link>
-  <joint name="lidar_base_mount_joint" type="fixed">
+  <joint name="rslidar_base_mount_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.04675"/>
     <parent link="base"/>
-    <child link="lidar_base_link"/>
+    <child link="rslidar_base_link"/>
   </joint>
-  <material name="lidar_aluminum">
+  <material name="rslidar_aluminum">
     <color rgba="0.5 0.5 0.5 1"/>
   </material>
-  <link name="lidar_base_link">
+  <link name="rslidar_base_link">
     <inertial>
       <mass value="0.87"/>
       <origin xyz="0 0 0"/>
@@ -2057,7 +2057,7 @@
       <geometry>
         <mesh filename="file:///home/quadruped_nmpc_hierarchical/quadruped_nmpc_hierarchical_harmonic_ws/install/sensors_description/share/sensors_description/meshes/robosense_lidar_16.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="lidar_aluminum"/>
+      <material name="rslidar_aluminum"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0.05"/>
@@ -2066,24 +2066,24 @@
       </geometry>
     </collision>
   </link>
-  <joint name="lidar_base_scan_joint" type="fixed">
+  <joint name="rslidar_base_scan_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.039"/>
-    <parent link="lidar_base_link"/>
-    <child link="lidar"/>
+    <parent link="rslidar_base_link"/>
+    <child link="rslidar"/>
   </joint>
-  <link name="lidar">
+  <link name="rslidar">
     <inertial>
       <mass value="0.01"/>
       <origin xyz="0 0 0"/>
       <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
     </inertial>
   </link>
-  <gazebo reference="lidar">
-    <sensor name="lidar_lidar3d" type="gpu_lidar">
+  <gazebo reference="rslidar">
+    <sensor name="rslidar_lidar3d" type="gpu_lidar">
       <update_rate>20</update_rate>
       <visualize>true</visualize>
       <always_on>true</always_on>
-      <gz_frame_id>lidar</gz_frame_id>
+      <gz_frame_id>rslidar</gz_frame_id>
       <topic>/lidar_3d</topic>
       <lidar>
         <scan>
