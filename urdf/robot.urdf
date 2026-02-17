@@ -2083,7 +2083,7 @@
       <update_rate>20</update_rate>
       <visualize>true</visualize>
       <always_on>true</always_on>
-      <gz_frame_id>rslidar</gz_frame_id>
+      <gz_frame_id>go1/rslidar</gz_frame_id>
       <topic>/lidar_3d</topic>
       <lidar>
         <scan>

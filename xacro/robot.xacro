@@ -171,6 +171,7 @@
 	</xacro:lidar> -->
 	<xacro:robosense_lidar_16 
 		name="rslidar"
+		prefix="go1/"
 		parent="base"
 		sim_ignition="true"
 		topic="/lidar_3d">
