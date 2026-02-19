@@ -19,7 +19,7 @@ elseif(${ament_cmake_FOUND})
 endif()
 
 # Install directories
-set(directories launch config meshes xacro urdf)
+set(directories config meshes xacro urdf)
 foreach(dir IN LISTS directories)
     install(
         DIRECTORY ${dir}

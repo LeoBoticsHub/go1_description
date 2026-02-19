@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+<name>go1_viz</name>
+<version>1.0.0</version>
+<description>Visualization launchers for GO1 robot</description>
+
+<maintainer email="valentina.pericu@leonardo.com">Valentina Pericu</maintainer>
+
+<license>BSD</license>
+
+<exec_depend>rviz2</exec_depend>
+
+<buildtool_depend>ament_cmake</buildtool_depend>
+
+<export>                               
+    <build_type>ament_cmake</build_type> 
+</export> 
+
+</package>

@@ -1,61 +1,17 @@
-# go1_description
+# Go1 Description
 
-This package contains the go1 description files. It works both with ROS and ROS 2 distros.
+This package contains the description URDF model for the Go1 robot. It is composed by two packages:
+- ```go1_description```: Contains the Xacro of the whole Go1 robot.
+- ```go1_viz```: Contains launchers for RViz visualizers (e.g. `ros2 launch go1_viz view_navigation.launch.py` to visualize the navigation demo)
 
 ## Dependencies
 
-this package depends on the following:
+This package depends on:
 
-* [sensors_description](https://github.com/LeoBoticsHub/sensors_description.git)
-* velodyne_description ```sudo apt install ros-$ROS_DISTRO-velodyne-description```
-
-please clone it in the same workspace of go1_description.
-
-## Launch files
-
-To see the robot description on rviz and interact with it:
-
-* ROS:
-
-```bash
-roslaunch go1_description go1_rviz.launch sensors:=true
-```
-
-* ROS 2:
-
-```bash
-ros2 launch go1_description go1_rviz.launch.py
-```
-
-To upload robot description and start robot state publisher for rviz visualization purposes in real applications:
-
-* ROS:
-
-```bash
-roslaunch go1_description upload.launch sensors:=true
-```
-
-* ROS 2:
-
-```bash
-ros2 launch go1_description upload.launch.py
-```
-
-To automatically launch RViz, launch:
-
-```bash
-ros2 launch go1_description upload.launch.py use_rviz:=true
-```
-
-by default `use_rviz:=true` is `false`.
-
-## Environment
-
-We recommand users to run this package in Ubuntu 20.04 or 22.04 and ROS noetic, Foxy or Humble environment.
+* [sensors_description](https://github.com/LeoBoticsHub/sensors_description.git): clone the `sensors_description` repo in the same workspace
 
 ## Authors
 
-The package is provided by:
-
-* [Federico Rollo](https://github.com/FedericoRollo) [Mantainer]
-* [Valentina Pericu](https://github.com/valeperi) [Mantainer]
+- [Giuseppe Alfonso](https://github.com/GiuseppeAlfonso)
+- [Federico Rollo](https://github.com/FedericoRollo)
+- [Valentina Pericu](https://github.com/valeperi)
