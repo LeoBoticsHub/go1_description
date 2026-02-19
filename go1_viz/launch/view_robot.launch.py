@@ -22,7 +22,7 @@ def generate_launch_description():
     rviz = Node(
             package='rviz2',
             executable='rviz2',
-            name='rviz_ocs2',
+            name='rviz2',
             output='screen',
             arguments=["-d", rviz_config_file]
         )
