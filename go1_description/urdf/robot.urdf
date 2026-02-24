@@ -179,6 +179,7 @@
   </gazebo>
   <gazebo>
     <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+      <robot_base_frame>/go1/base</robot_base_frame>
       <dimensions>3</dimensions>
     </plugin>
   </gazebo>
