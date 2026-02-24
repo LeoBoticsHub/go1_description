@@ -173,6 +173,7 @@
 				<update_rate>500</update_rate>
 				<visualize>true</visualize>
 				<topic>imu</topic>
+				 <gz_frame_id>${prefix}imu_link</gz_frame_id>
 				<imu>
 					<angular_velocity>
 						<x>
