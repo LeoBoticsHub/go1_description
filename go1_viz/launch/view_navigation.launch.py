@@ -17,7 +17,6 @@ go1_viz_pkg_name         = "go1_viz"         # name of the go1_viz package
 def generate_launch_description():
 
     rviz_config_file = os.path.join(get_package_share_directory(go1_viz_pkg_name), "rviz", "nav2.rviz")
-    # robot_description = process_xacro()
 
     rviz = Node(
             package='rviz2',
@@ -27,31 +26,8 @@ def generate_launch_description():
             arguments=["-d", rviz_config_file]
         )
     
-    # robot_state_pub = Node(
-    #         package='robot_state_publisher',
-    #         executable='robot_state_publisher',
-    #         name='robot_state_publisher',
-    #         output='screen',
-    #         parameters=[
-    #             {
-    #                 'publish_frequency': 100.0,
-    #                 'use_tf_static': True,
-    #                 'robot_description': robot_description
-    #             }
-    #         ],
-    #     )
-    
-    # joint_state_pub = Node(
-    #         package='joint_state_publisher_gui',
-    #         executable='joint_state_publisher_gui',
-    #         name='joint_state_publisher',
-    #         output='screen',
-    #     )
-    
     ld = LaunchDescription()
     
     ld.add_action(rviz)
-    # ld.add_action(robot_state_pub)
-    # ld.add_action(joint_state_pub)
     
     return ld
