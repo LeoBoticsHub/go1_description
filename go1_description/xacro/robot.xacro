@@ -180,4 +180,7 @@
 	<xacro:gps parent="base">
 		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 	</xacro:gps>
+	<xacro:if value="$(arg GAZEBO)">
+		<xacro:gazebo prefix="go1/"/>
+	</xacro:if>
 </robot>
