@@ -9,7 +9,7 @@ go1_viz_pkg_name = "go1_viz"         # name of the go1_viz package
 
 def generate_launch_description():
 
-    rviz_config_file = os.path.join(get_package_share_directory(go1_viz_pkg_name), "rviz", "nav2.rviz")
+    rviz_config_file = os.path.join(get_package_share_directory(go1_viz_pkg_name), "rviz", "outdoor_nav2.rviz")
 
     rviz = Node(
             package='rviz2',
