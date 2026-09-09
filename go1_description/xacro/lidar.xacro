@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="lidar" params="*origin">
+
+        <joint type="fixed" name="lidar_joint">
+			<xacro:insert_block name="origin"/>
+            <child link="lidar_link"/>
+            <parent link="base"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <link name='lidar_link'>
+            <inertial>
+                <mass value="1e-5"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia
+                    ixx="1e-6" ixy="0" ixz="0"
+                    iyy="1e-6" iyz="0"
+                    izz="1e-6"
+                />
+            </inertial>
+            <collision name='lidar_link_collision'>
+                <origin xyz="0 0 0" rpy="1.57 0 0"/> 
+                <geometry>
+                    <mesh filename = "package://sensors_description/meshes/robosense_lidar_16.stl" scale ="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+
+            <visual name='lidar_link_visual'>
+                <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <geometry>
+                    <mesh filename = "package://sensors_description/meshes/robosense_lidar_16.stl" scale ="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+        </link>
+
+    </xacro:macro>
+
+</robot>

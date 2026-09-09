@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find go1_description)/xacro/ft_sensor.xacro"/>
+  	<xacro:macro name="gazebo" params="prefix:=">
+		<ros2_control name="GazeboSystem" type="system">
+			<hardware>
+				<plugin>gz_ros2_control/GazeboSimSystem</plugin>
+			</hardware>
+
+			<!-- <hardware>
+				<plugin>ign_ros2_control/IgnitionSystem</plugin>
+			</hardware> -->
+
+			<joint name="LF_HAA">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.0</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="LF_HFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.72</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="LF_KFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">-1.44</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="LH_HAA">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+							<state_interface name="position">
+					<param name="initial_value">0.0</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="LH_HFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.72</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="LH_KFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">-1.44</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RF_HAA">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.0</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RF_HFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.72</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RF_KFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">-1.44</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RH_HAA">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.0</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RH_HFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">0.72</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<joint name="RH_KFE">
+				<command_interface name="effort"/>
+				<command_interface name="velocity" initial_value="0.0"/>
+				<state_interface name="position">
+					<param name="initial_value">-1.44</param>
+				</state_interface>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+
+			<sensor name="imu_sensor">
+				<state_interface name="orientation.x"/>
+				<state_interface name="orientation.y"/>
+				<state_interface name="orientation.z"/>
+				<state_interface name="orientation.w"/>
+				<state_interface name="angular_velocity.x"/>
+				<state_interface name="angular_velocity.y"/>
+				<state_interface name="angular_velocity.z"/>
+				<state_interface name="linear_acceleration.x"/>
+				<state_interface name="linear_acceleration.y"/>
+				<state_interface name="linear_acceleration.z"/>
+			</sensor>
+		</ros2_control>
+
+		<gazebo>
+			<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+				<parameters>$(find go1_description)/config/gazebo.yaml</parameters>
+			</plugin>
+			<plugin filename="gz-sim-imu-system"
+							name="gz::sim::systems::Imu">
+			</plugin>
+		</gazebo>
+
+		<gazebo reference="base">
+			<mu1>0.6</mu1>
+			<mu2>0.6</mu2>
+			<self_collide>1</self_collide>
+		</gazebo>
+
+		<gazebo>
+			<plugin name="gz::sim::systems::OdometryPublisher" filename="gz-sim-odometry-publisher-system">
+				<robot_base_frame>${prefix}base</robot_base_frame>
+				<dimensions>3</dimensions>
+			</plugin>
+		</gazebo>
+
+		<gazebo reference="imu_link">
+			<sensor name="imu_sensor" type="imu">
+				<always_on>1</always_on>
+				<update_rate>500</update_rate>
+				<visualize>true</visualize>
+				<topic>imu</topic>
+				 <gz_frame_id>${prefix}imu_link</gz_frame_id>
+				<imu>
+					<angular_velocity>
+						<x>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>2e-4</stddev>
+								<bias_mean>0.0000075</bias_mean>
+								<bias_stddev>0.0000008</bias_stddev>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>2e-4</stddev>
+								<bias_mean>0.0000075</bias_mean>
+								<bias_stddev>0.0000008</bias_stddev>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>2e-4</stddev>
+								<bias_mean>0.0000075</bias_mean>
+								<bias_stddev>0.0000008</bias_stddev>
+							</noise>
+						</z>
+					</angular_velocity>
+					<linear_acceleration>
+						<x>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>1.7e-2</stddev>
+								<bias_mean>0.1</bias_mean>
+								<bias_stddev>0.001</bias_stddev>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>1.7e-2</stddev>
+								<bias_mean>0.1</bias_mean>
+								<bias_stddev>0.001</bias_stddev>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0.0</mean>
+								<stddev>1.7e-2</stddev>
+								<bias_mean>0.1</bias_mean>
+								<bias_stddev>0.001</bias_stddev>
+							</noise>
+						</z>
+					</linear_acceleration>
+				</imu>
+			</sensor>
+		</gazebo>
+		<gazebo reference="imu_joint">
+			<disableFixedJointLumping>true</disableFixedJointLumping>
+		</gazebo>
+
+		<gazebo reference="LF_foot_fixed">
+			<!-- Enable feedback for this joint -->
+			<provideFeedback>true</provideFeedback>
+			<!-- Prevent ros2_control from lumping this fixed joint with others -->
+			<disableFixedJointLumping>true</disableFixedJointLumping>
+			<sensor name="LF_ft_sensor" type="force_torque">
+			<always_on>1</always_on>
+			<update_rate>500</update_rate>
+			<visualize>true</visualize>
+			<force_torque>
+				<frame>child</frame>
+				<!--                <measure_direction>child_to_parent</measure_direction>-->
+			</force_torque>
+			</sensor>
+		</gazebo>
+		<gazebo reference="LH_foot_fixed">
+			<!-- Enable feedback for this joint -->
+			<provideFeedback>true</provideFeedback>
+			<!-- Prevent ros2_control from lumping this fixed joint with others -->
+			<disableFixedJointLumping>true</disableFixedJointLumping>
+			<sensor name="LH_ft_sensor" type="force_torque">
+			<always_on>1</always_on>
+			<update_rate>500</update_rate>
+			<visualize>true</visualize>
+			<force_torque>
+				<frame>child</frame>
+				<!--                <measure_direction>child_to_parent</measure_direction>-->
+			</force_torque>
+			</sensor>
+		</gazebo>
+		<gazebo reference="RF_foot_fixed">
+			<!-- Enable feedback for this joint -->
+			<provideFeedback>true</provideFeedback>
+			<!-- Prevent ros2_control from lumping this fixed joint with others -->
+			<disableFixedJointLumping>true</disableFixedJointLumping>
+			<sensor name="RF_ft_sensor" type="force_torque">
+			<always_on>1</always_on>
+			<update_rate>500</update_rate>
+			<visualize>true</visualize>
+			<force_torque>
+				<frame>child</frame>
+				<!--                <measure_direction>child_to_parent</measure_direction>-->
+			</force_torque>
+			</sensor>
+		</gazebo>
+		<gazebo reference="RH_foot_fixed">
+			<!-- Enable feedback for this joint -->
+			<provideFeedback>true</provideFeedback>
+			<!-- Prevent ros2_control from lumping this fixed joint with others -->
+			<disableFixedJointLumping>true</disableFixedJointLumping>
+			<sensor name="RH_ft_sensor" type="force_torque">
+			<always_on>1</always_on>
+			<update_rate>500</update_rate>
+			<visualize>true</visualize>
+			<force_torque>
+				<frame>child</frame>
+				<!--                <measure_direction>child_to_parent</measure_direction>-->
+			</force_torque>
+			</sensor>
+		</gazebo>
+
+		<gazebo reference="LF_FOOT">
+			<sensor name="LF_foot_contact" type="contact">
+			<update_rate>100</update_rate>
+			<contact>
+				<collision>LF_FOOT_fixed_joint_lump__LF_foot_collision_collision</collision>
+			</contact>
+			</sensor>
+		</gazebo>
+		<gazebo reference="LH_FOOT">
+			<sensor name="LH_foot_contact" type="contact">
+			<update_rate>100</update_rate>
+			<contact>
+				<collision>LH_FOOT_fixed_joint_lump__LH_foot_collision_collision</collision>
+			</contact>
+			</sensor>
+		</gazebo>
+		<gazebo reference="RF_FOOT">
+			<sensor name="RF_foot_contact" type="contact">
+			<update_rate>100</update_rate>
+			<contact>
+				<collision>RF_FOOT_fixed_joint_lump__RF_foot_collision_collision</collision>
+			</contact>
+			</sensor>
+		</gazebo>
+		<gazebo reference="RH_FOOT">
+			<sensor name="RH_foot_contact" type="contact">
+			<update_rate>100</update_rate>
+			<contact>
+				<collision>RH_FOOT_fixed_joint_lump__RH_foot_collision_collision</collision>
+			</contact>
+			</sensor>
+		</gazebo>
+
+		<!-- <gazebo reference="lidar_link">
+			<sensor name="gpu_lidar" type="gpu_lidar">
+				<update_rate>10</update_rate>
+				<topic>scan</topic>
+				<gz_frame_id>lidar_link</gz_frame_id>
+				<lidar>
+					<scan>
+						<horizontal>
+							<samples>900</samples>
+							<resolution>1</resolution>
+							<min_angle>-3.14156</min_angle>
+							<max_angle>3.14156</max_angle>
+						</horizontal>
+						<vertical>
+							<samples>32</samples>
+							<min_angle>-0.1</min_angle>
+							<max_angle>0.1862</max_angle>
+						</vertical>
+					</scan>
+					<range>
+						<min>0.05</min>
+						<max>10.0</max>
+						<resolution>0.01</resolution>
+					</range>
+					<noise>
+						<type>gaussian</type>
+						<mean>0.0</mean>
+						<stddev>0.008</stddev>
+					</noise>
+					<frame_id>lidar_link</frame_id>
+				</lidar>
+				<always_on>1</always_on>
+				<visualize>true</visualize>
+			</sensor>
+		</gazebo> -->
+		<gazebo reference="gps_link">
+			<sensor name="gps" type="navsat">
+				<always_on>1</always_on>
+				<update_rate>10</update_rate>
+				<topic>gps</topic>
+				<gz_frame_id>${prefix}gps_link</gz_frame_id>
+			</sensor>
+		</gazebo>
+	</xacro:macro>
+</robot>

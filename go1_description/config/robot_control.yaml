@@ -1,0 +1,155 @@
+# Controller Manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 400  # Hz
+
+    # Define the available controllers
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+    unitree_guide_controller:
+      type: unitree_guide_controller/UnitreeGuideController
+
+    ocs2_quadruped_controller:
+      type: ocs2_quadruped_controller/Ocs2QuadrupedController
+
+    joint_group_velocity_controller:
+        type: velocity_controllers/JointGroupVelocityController
+
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
+
+unitree_guide_controller:
+  ros__parameters:
+    update_rate: 200  # Hz
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+
+    command_interfaces:
+      - effort
+      - position
+      - velocity
+      - kp
+      - kd
+
+    state_interfaces:
+      - effort
+      - position
+      - velocity
+
+    feet_names:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+    imu_name: "imu_sensor"
+    base_name: "base"
+
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+
+ocs2_quadruped_controller:
+  ros__parameters:
+    update_rate: 400  # Hz
+    robot_pkg: "go1_description"
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+
+    command_interfaces:
+      - effort
+      - position
+      - velocity
+      - kp
+      - kd
+
+    state_interfaces:
+      - effort
+      - position
+      - velocity
+
+    feet:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+
+    imu_name: "imu_sensor"
+    base_name: "base"
+
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+
+    foot_force_name: "foot_force"
+    foot_force_interfaces:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+joint_group_velocity_controller:
+    ros__parameters:
+      joints:
+        - RF_HAA
+        - RF_HFE
+        - RF_KFE
+        - LF_HAA
+        - LF_HFE
+        - LF_KFE
+        - RH_HAA
+        - RH_HFE
+        - RH_KFE
+        - LH_HAA
+        - LH_HFE
+        - LH_KFE
+      command_interfaces:
+      - velocity
+      state_interfaces:
+      - position
+      - velocity

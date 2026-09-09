@@ -1,0 +1,204 @@
+gazebo:
+  ros__parameters:
+    publish_rate: 1000.0
+
+# Controller Manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    # Define the available controllers
+    # joint_state_broadcaster:
+    #   type: joint_state_broadcaster/JointStateBroadcaster
+    #   publish_rate: 200.0   # Hz
+    #   topic_name: "/gazebo_joint_states"
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+      ros__parameters:
+        topic_name: 'gazebo_joint_states'
+        publish_rate: 200.0
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+    leg_pd_controller:
+      type: leg_pd_controller/LegPdController
+
+    unitree_guide_controller:
+      type: unitree_guide_controller/UnitreeGuideController
+
+    rl_quadruped_controller:
+      type: rl_quadruped_controller/LeggedGymController
+
+    joint_group_velocity_controller:
+        type: velocity_controllers/JointGroupVelocityController
+
+    joint_group_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
+    joint_group_position_controller:
+      type: position_controllers/JointGroupPositionController
+
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
+
+leg_pd_controller:
+  ros__parameters:
+    update_rate: 1000  # Hz
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+
+    command_interfaces:
+      - effort
+
+    state_interfaces:
+      - position
+      - velocity
+
+unitree_guide_controller:
+  ros__parameters:
+    update_rate: 200  # Hz
+    command_prefix: "leg_pd_controller"
+    joints:
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+
+    command_interfaces:
+      - effort
+      - position
+      - velocity
+      - kp
+      - kd
+
+    state_interfaces:
+      - effort
+      - position
+      - velocity
+
+    feet_names:
+      - RF_FOOT
+      - LF_FOOT
+      - RH_FOOT
+      - LH_FOOT
+
+    imu_name: "imu_sensor"
+    base_name: "base"
+
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+
+joint_group_velocity_controller:
+    ros__parameters:
+      use_sim_time: True
+      joints:
+        - LF_HAA
+        - LF_HFE
+        - LF_KFE
+        - LH_HAA
+        - LH_HFE
+        - LH_KFE
+        - RF_HAA
+        - RF_HFE
+        - RF_KFE
+        - RH_HAA
+        - RH_HFE
+        - RH_KFE
+      command_interfaces:
+      - velocity
+      state_interfaces:
+      - position
+      - velocity
+
+joint_group_position_controller:
+    ros__parameters:
+      joints:
+        - LF_HAA
+        - LF_HFE
+        - LF_KFE
+        - LH_HAA
+        - LH_HFE
+        - LH_KFE
+        - RF_HAA
+        - RF_HFE
+        - RF_KFE
+        - RH_HAA
+        - RH_HFE
+        - RH_KFE
+      command_interfaces:
+      - velocity
+      state_interfaces:
+      - position
+      - velocity
+      pid:
+        p: 0.0   # try increasing gradually
+        i: 0.0
+        d: 0.0
+
+joint_group_effort_controller:
+  ros__parameters:
+    use_sim_time: True
+    joints:
+      - LF_HAA
+      - LF_HFE
+      - LF_KFE
+      - LH_HAA
+      - LH_HFE
+      - LH_KFE
+      - RF_HAA
+      - RF_HFE
+      - RF_KFE
+      - RH_HAA
+      - RH_HFE
+      - RH_KFE
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+
+    gains:
+      LF_HAA        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      LF_HFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      LF_KFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      LH_HAA        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      LH_HFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      LH_KFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RF_HAA        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RF_HFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RF_KFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RH_HAA        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RH_HFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
+      RH_KFE        : {p: 50.0, i: 0.0, d: 1.0, i_clamp: 2.5}
