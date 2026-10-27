@@ -10,7 +10,7 @@
 	<xacro:include filename="$(find go1_description)/xacro/materials.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/leg.xacro"/>
 
-	<xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
+	<xacro:include filename="$(find go1_description)/xacro/camera.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
 	<!-- <xacro:include filename="$(find go1_description)/xacro/lidar.xacro"/> -->
 	<xacro:include filename="$(find sensors_description)/xacro/gps.xacro"/>
@@ -117,26 +117,26 @@
 	<xacro:leg name="RF" mirror="-1" mirror_dae="False" front_hind="1" front_hind_dae="True"/>
 	<xacro:leg name="RH" mirror="-1" mirror_dae="False" front_hind="-1" front_hind_dae="False"/>
 
-	<xacro:depthCamera camID="1" name="face">
-		<origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="1" name="face">
+		<origin rpy="0 0 0" xyz="0.2785 0.0125 0.0167"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="2" name="chin">
-		<origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="2" name="chin">
+		<origin rpy="0 ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="3" name="left">
-		<origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="3" name="left">
+		<origin rpy="0 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="4" name="right">
-		<origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="4" name="right">
+		<origin rpy="0 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="5" name="rearDown">
-		<origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
-	</xacro:depthCamera>
-
+	<xacro:camera camID="5" name="rearDown">
+		<origin rpy="0 ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
+	</xacro:camera>
+	
 	<joint name="camera_laserscan_joint_left" type="fixed">
 		<origin rpy="0 0.2618 0" xyz="0 0 0"/>
 		<parent link="camera_left"/>
