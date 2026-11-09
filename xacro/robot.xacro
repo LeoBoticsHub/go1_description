@@ -10,8 +10,13 @@
 	<xacro:include filename="$(find go1_description)/xacro/materials.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/leg.xacro"/>
 
-	<xacro:include filename="$(find go1_description)/xacro/depthCamera.xacro"/>
+	<xacro:include filename="$(find go1_description)/xacro/camera.xacro"/>
 	<xacro:include filename="$(find go1_description)/xacro/ultraSound.xacro"/>
+	<!-- <xacro:include filename="$(find go1_description)/xacro/lidar.xacro"/> -->
+	<xacro:include filename="$(find sensors_description)/xacro/gps.xacro"/>
+
+	<xacro:include filename="$(find sensors_description)/xacro/robosense_lidar_16.xacro"/>
+	<xacro:include filename="$(find sensors_description)/xacro/lidar_3d.gazebo.xacro"/>
 
 	<xacro:if value="$(arg GAZEBO)">
 		<xacro:if value="$(arg CLASSIC)">
@@ -60,7 +65,7 @@
 		<visual>
 			<origin rpy="0 0 0" xyz="0 0 0"/>
 			<geometry>
-				<mesh filename="file://$(find go1_description)/meshes/trunk.dae" scale="1 1 1"/>
+				<mesh filename="package://go1_description/meshes/trunk.dae" scale="1 1 1"/>
 			</geometry>
 			<material name="light-grey"/>
 		</visual>
@@ -112,26 +117,26 @@
 	<xacro:leg name="RF" mirror="-1" mirror_dae="False" front_hind="1" front_hind_dae="True"/>
 	<xacro:leg name="RH" mirror="-1" mirror_dae="False" front_hind="-1" front_hind_dae="False"/>
 
-	<xacro:depthCamera camID="1" name="face">
-		<origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="1" name="face">
+		<origin rpy="0 0 0" xyz="0.2785 0.0125 0.0167"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="2" name="chin">
-		<origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="2" name="chin">
+		<origin rpy="0 ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="3" name="left">
-		<origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="3" name="left">
+		<origin rpy="0 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="4" name="right">
-		<origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
-	</xacro:depthCamera>
+	<xacro:camera camID="4" name="right">
+		<origin rpy="0 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
+	</xacro:camera>
 
-	<xacro:depthCamera camID="5" name="rearDown">
-		<origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
-	</xacro:depthCamera>
-
+	<xacro:camera camID="5" name="rearDown">
+		<origin rpy="0 ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
+	</xacro:camera>
+	
 	<joint name="camera_laserscan_joint_left" type="fixed">
 		<origin rpy="0 0.2618 0" xyz="0 0 0"/>
 		<parent link="camera_left"/>
@@ -161,4 +166,21 @@
 	<xacro:ultraSound name="face">
 		<origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
 	</xacro:ultraSound>
+	<!-- <xacro:lidar>
+        <origin xyz="0.0 0 0.04675" rpy="0.0 0 0"/>
+	</xacro:lidar> -->
+	<xacro:robosense_lidar_16 
+		name="rslidar"
+		prefix="go1/"
+		parent="base"
+		sim_ignition="true"
+		topic="/lidar_3d">
+		<origin xyz="0 0 0.04675" rpy="0 0 0"/>
+	</xacro:robosense_lidar_16>
+	<xacro:gps parent="base">
+		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+	</xacro:gps>
+	<xacro:if value="$(arg GAZEBO)">
+		<xacro:gazebo prefix="go1/"/>
+	</xacro:if>
 </robot>
